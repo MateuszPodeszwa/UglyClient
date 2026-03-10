@@ -1,4 +1,5 @@
-﻿using Microsoft.Extensions.DependencyInjection;
+﻿using BeautifulClient.Configuration;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Serilog;
 
@@ -11,6 +12,7 @@ internal class Program
         var builder = Host.CreateApplicationBuilder(args);
         
         // Configure Serilog and replace the default .NET logger
+        // Logs are saved in the bin/Debug/net10.0/logs
         builder.Services.AddSerilog(config => 
         {
             config.ReadFrom.Configuration(builder.Configuration); // Read the configuration from appsettings.json file

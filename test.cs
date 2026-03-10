@@ -12,8 +12,3 @@ public class MessageService : IMessageService
         Console.WriteLine($"Message sent: {message}");
     }
 }
-
-public class MySettings
-{
-    public string GreetingMessage { get; set; } = string.Empty;
-}
