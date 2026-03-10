@@ -1,5 +1,6 @@
 using BeautifulClient.Configuration;
 using BeautifulClient.Services;
+using BeautifulClient.Services.Api;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 
