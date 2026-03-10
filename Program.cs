@@ -1,8 +1,10 @@
 ﻿using BeautifulClient.Configuration;
 using BeautifulClient.Services;
 using BeautifulClient.Services.Api;
+using BeautifulClient.Utilities;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using Serilog;
 
@@ -39,7 +41,11 @@ internal class Program
 
             // Add the API key as a default header
             client.DefaultRequestHeaders.Add("ApiKey", settings.ApiKey);
-        });
+        }).AddPolicyHandler((sp, request) => 
+        {
+            var logger = sp.GetRequiredService<ILogger<HttpPolicies>>();
+            return HttpPolicies.GetRetryPolicy(logger);
+        }); // Manually inject ILogger into static HttpPolicies.GetRetryPolicy()
         
         // Add Dependencies (DI)
         builder.Services.AddTransient<IMessageService, MessageService>();
