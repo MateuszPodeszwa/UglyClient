@@ -4,9 +4,14 @@ using Microsoft.Extensions.Options;
 
 namespace BeautifulClient;
 
-public class App(IMessageService messageService, IOptions<MySettings> options, ILogger<App> logger)
+public class App(
+    IMessageService messageService,
+    IOptions<MySettings> options,
+    ILogger<App> logger,
+    IOptions<ApiSettings> apiSettings)
 {
     private readonly MySettings _settings = options.Value;
+    private readonly ApiSettings _apiSettings = apiSettings.Value;
 
     public void Run()
     {
@@ -15,6 +20,8 @@ public class App(IMessageService messageService, IOptions<MySettings> options, I
         try
         {
             messageService.SendMessage(_settings.GreetingMessage);
+            messageService.SendMessage(_apiSettings.ApiKey);
+            messageService.SendMessage(_apiSettings.BaseUrl);
             logger.LogInformation("Greeting message was processed successfully.");
         }
         catch (Exception ex)

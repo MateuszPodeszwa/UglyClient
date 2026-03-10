@@ -21,6 +21,8 @@ internal class Program
         // Bind the "MySettings" section from appsettings.json to the MySettings class
         // For debug only, until I figure out how to benefit from it
         builder.Services.Configure<MySettings>(builder.Configuration.GetSection("MySettings"));
+        // Bind ApiSettings
+        builder.Services.Configure<ApiSettings>(builder.Configuration.GetSection("ApiSettings"));
         
         // Add Dependencies (DI)
         builder.Services.AddTransient<IMessageService, MessageService>();
