@@ -13,9 +13,7 @@ internal class Program
         // Configure Serilog and replace the default .NET logger
         builder.Services.AddSerilog(config => 
         {
-            config
-                .WriteTo.Console() // Keep console output
-                .WriteTo.File("logs/app-log-.txt", rollingInterval: RollingInterval.Day); // Write to file
+            config.ReadFrom.Configuration(builder.Configuration); // Read the configuration from appsettings.json file
         });
 
         // Bind the "MySettings" section from appsettings.json to the MySettings class
