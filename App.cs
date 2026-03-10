@@ -26,7 +26,7 @@ public class App(
             messageService.SendMessage(_apiSettings.ApiKey);
             messageService.SendMessage(_apiSettings.BaseUrl);
             logger.LogInformation("Greeting message was processed successfully.");
-            messageService.SendMessage(apiService.GetAsync().Result);
+            messageService.SendMessage(apiService.GetAsync("data").Result);
         }
         catch (Exception ex)
         {

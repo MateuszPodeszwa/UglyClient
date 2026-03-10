@@ -5,5 +5,10 @@ namespace BeautifulClient.Services.Api;
 /// </summary>
 public interface IApiService
 {
-    Task<string> GetAsync();
+    /// <summary>
+    /// Returns httpClient.GetAsync with requestUri
+    /// </summary>
+    /// <param name="requestUri"></param>
+    /// <returns></returns>
+    Task<string> GetAsync(string requestUri);
 }
