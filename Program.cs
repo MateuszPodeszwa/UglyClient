@@ -1,6 +1,8 @@
 ﻿using BeautifulClient.Configuration;
+using BeautifulClient.Services;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Options;
 using Serilog;
 
 namespace BeautifulClient;
@@ -21,8 +23,22 @@ internal class Program
         // Bind the "MySettings" section from appsettings.json to the MySettings class
         // For debug only, until I figure out how to benefit from it
         builder.Services.Configure<MySettings>(builder.Configuration.GetSection("MySettings"));
-        // Bind ApiSettings
+        
+        // Bind ApiSettings (BaseUrl from JSON, ApiKey from User Secrets)
         builder.Services.Configure<ApiSettings>(builder.Configuration.GetSection("ApiSettings"));
+
+        // Register the Typed Client and configure its default behaviour
+        builder.Services.AddHttpClient<IApiService, ApiService>((serviceProvider, client) =>
+        {
+            // Retrieve the merged settings from the DI container
+            var settings = serviceProvider.GetRequiredService<IOptions<ApiSettings>>().Value;
+
+            // Set the base URL for all requests made by this client
+            client.BaseAddress = new Uri(settings.BaseUrl);
+
+            // Add the API key as a default header
+            client.DefaultRequestHeaders.Add("ApiKey", settings.ApiKey);
+        });
         
         // Add Dependencies (DI)
         builder.Services.AddTransient<IMessageService, MessageService>();
