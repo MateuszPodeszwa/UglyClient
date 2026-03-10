@@ -1,5 +1,4 @@
 ﻿using BeautifulClient.Configuration;
-using BeautifulClient.Services;
 using BeautifulClient.Services.Api;
 using BeautifulClient.Utilities;
 using Microsoft.Extensions.DependencyInjection;
@@ -12,7 +11,7 @@ namespace BeautifulClient;
 
 internal class Program
 {
-    private static void Main(string[] args)
+    private static async Task Main(string[] args)
     {
         var builder = Host.CreateApplicationBuilder(args);
         
@@ -55,6 +54,6 @@ internal class Program
 
         // Resolve the main application class (entry point for the app) and execute it
         var app = host.Services.GetRequiredService<App>();
-        app.Run();
+        await app.RunAsync();
     }
 }

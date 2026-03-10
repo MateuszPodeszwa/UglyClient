@@ -16,7 +16,7 @@ public class App(
     private readonly MySettings _settings = options.Value;
     private readonly ApiSettings _apiSettings = apiSettings.Value;
 
-    public void Run()
+    public async Task RunAsync()
     {
         logger.LogInformation("App started running.");
 
@@ -26,7 +26,9 @@ public class App(
             messageService.SendMessage(_apiSettings.ApiKey);
             messageService.SendMessage(_apiSettings.BaseUrl);
             logger.LogInformation("Greeting message was processed successfully.");
-            messageService.SendMessage(apiService.GetAsync("data").Result);
+            
+            // messageService.SendMessage(await apiService.GetAsync("500error"));
+            messageService.SendMessage(await apiService.GetAsync("data"));
         }
         catch (Exception ex)
         {
