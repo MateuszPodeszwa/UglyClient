@@ -1,6 +1,8 @@
-﻿using BeautifulClient.Configuration;
+﻿using System.Reflection;
+using BeautifulClient.Configuration;
 using BeautifulClient.Services.Api;
 using BeautifulClient.Utilities;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
@@ -14,6 +16,12 @@ internal class Program
     private static async Task Main(string[] args)
     {
         var builder = Host.CreateApplicationBuilder(args);
+        
+        // Development Env., which forces User Secrets to load
+        builder.Environment.EnvironmentName = "Development";
+        
+        // Explicitly force the configuration to load project's User Secrets
+        builder.Configuration.AddUserSecrets(Assembly.GetExecutingAssembly());
         
         // Configure Serilog and replace the default .NET logger
         // Logs are saved in the bin/Debug/net10.0/logs
