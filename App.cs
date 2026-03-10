@@ -9,7 +9,6 @@ public class App(IMessageService messageService, IOptions<MySettings> options, I
 
     public void Run()
     {
-        // Use the logger to record application flow
         logger.LogInformation("App started running.");
 
         try
@@ -19,7 +18,6 @@ public class App(IMessageService messageService, IOptions<MySettings> options, I
         }
         catch (Exception ex)
         {
-            // LogError can take the Exception object directly to print the stack trace
             logger.LogError(ex, "A critical error occurred while sending the message.");
         }
         

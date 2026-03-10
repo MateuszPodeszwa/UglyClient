@@ -22,7 +22,7 @@ internal class Program
         
         // Add Dependencies (DI)
         builder.Services.AddTransient<IMessageService, MessageService>();
-        builder.Services.AddSingleton<App>(); // The entry point class for your console logic
+        builder.Services.AddSingleton<App>(); // The entry point class for the console logic
         
         using var host = builder.Build();
 
