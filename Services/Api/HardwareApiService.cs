@@ -8,10 +8,10 @@ public class HardwareApiService(HttpClient httpClient, ILogger<HardwareApiServic
 {
     public async Task<string> GetAsync(string requestUri)
     {
-        HttpResponseMessage responseMessage = null!;
-        try
+        HttpResponseMessage responseMessage = null!; try
         {
             responseMessage = await httpClient.GetAsync(requestUri);
+            // Throws an HttpRequestException if the status is 4xx or 5xx
             responseMessage.EnsureSuccessStatusCode();
             return await responseMessage.Content.ReadAsStringAsync();
         }
@@ -22,7 +22,7 @@ public class HardwareApiService(HttpClient httpClient, ILogger<HardwareApiServic
         }
         catch (Exception e)
         {
-            logger.LogError(e, "Unexpected error fetching");
+            logger.LogError(e, "Request for {responseMessage} has encountered exception, {Message}", responseMessage, e.Message);
         
             return string.Empty;
         }
@@ -30,42 +30,30 @@ public class HardwareApiService(HttpClient httpClient, ILogger<HardwareApiServic
 
     public async Task<double> GetSensorTemperatureAsync(int sensorId)
     {
-        HttpResponseMessage responseMessage = null!;
-
-        try
+        HttpResponseMessage responseMessage = null!; try
         {
             responseMessage = await httpClient.GetAsync($"api/sensors/{sensorId}");
-        
             // Throws an HttpRequestException if the status is 4xx or 5xx
             responseMessage.EnsureSuccessStatusCode();
+            var responseMessageContent = await responseMessage.Content.ReadAsStringAsync(); // Promises Double
 
-            var tempString = await responseMessage.Content.ReadAsStringAsync();
-
-            // Use TryParse: It handles nulls, bad formats, and overflows safely!
-            if (double.TryParse(tempString, out var temperature))
+            if (double.TryParse(responseMessageContent, out var temperature))
             {
+                logger.LogInformation("Sensor {SensorId} returned valid data temperature {Temperature}", sensorId, temperature);
                 return temperature;
             }
-            else
-            {
-                // The API returned a 200 OK, but the text wasn't a valid number
-                logger.LogWarning("Sensor {SensorId} returned invalid data format: '{TempString}'", sensorId, tempString);
-                return double.NaN; 
-            }
+            
+            logger.LogWarning("Sensor {SensorId} returned invalid data format: '{responseMessageContent}'", sensorId, responseMessageContent);
+            return double.NaN;
         }
         catch (HttpRequestException e)
         {
-            // Network failed, or the API returned a 404/500
-            logger.LogCritical(e, "HTTP request failed for sensor {SensorId}. Status Code: {StatusCode}", 
-                sensorId, responseMessage?.StatusCode);
-            
+            logger.LogCritical(e, "HTTP request failed for sensor {SensorId}. Status Code: {StatusCode}", sensorId, responseMessage?.StatusCode);
             return double.NaN; 
         }
         catch (Exception e)
         {
-            // A catch-all for anything truly unexpected (e.g., TaskCanceledException if it times out)
             logger.LogError(e, "Unexpected error fetching temperature for sensor {SensorId}.", sensorId);
-        
             return double.NaN;
         }
     }
