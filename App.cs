@@ -1,3 +1,4 @@
+using System.Globalization;
 using BeautifulClient.Configuration;
 using BeautifulClient.Services.Api;
 using Microsoft.Extensions.Logging;
@@ -12,8 +13,8 @@ public class App(
     IOptions<ApiSettings> apiSettings,
     IHardwareApiService hardwareApiService)
 {
-    private readonly MySettings _settings = options.Value;
-    private readonly ApiSettings _apiSettings = apiSettings.Value;
+    private MySettings Settings { get; } = options.Value;
+    private ApiSettings ApiSettings { get; } = apiSettings.Value;
 
     public async Task RunAsync()
     {
@@ -21,13 +22,13 @@ public class App(
 
         try
         {
-            messageService.SendMessage(_settings.GreetingMessage);
-            messageService.SendMessage(_apiSettings.ApiKey);
-            messageService.SendMessage(_apiSettings.BaseUrl);
+            messageService.SendMessage(Settings.GreetingMessage);
+            messageService.SendMessage(ApiSettings.ApiKey);
+            messageService.SendMessage(ApiSettings.BaseUrl);
             logger.LogInformation("Greeting message was processed successfully.");
-            
-            // messageService.SendMessage(await hardwareApiService.GetAsync("500error"));
-            messageService.SendMessage(await hardwareApiService.GetAsync("data"));
+
+            var sensor1 = await hardwareApiService.GetSensorTemperatureAsync(1);
+            messageService.SendMessage(Convert.ToString(sensor1, CultureInfo.CurrentCulture));
         }
         catch (Exception ex)
         {
