@@ -47,7 +47,7 @@ internal class Program
             client.BaseAddress = new Uri(settings.BaseUrl);
 
             // Add the API key as a default header
-            client.DefaultRequestHeaders.Add("ApiKey", settings.ApiKey);
+            client.DefaultRequestHeaders.Add("X-Api-Key", settings.ApiKey);
         }).AddPolicyHandler((sp, request) => 
         {
             var logger = sp.GetRequiredService<ILogger<HttpPolicies>>();
