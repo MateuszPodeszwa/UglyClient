@@ -26,6 +26,11 @@ public class HardwareApiService(HttpClient httpClient, ILogger<HardwareApiServic
         
             return string.Empty;
         }
+        finally 
+        {
+            // Manually dispose HttpResponseMessage to avoid socked exhaustion - only if the responseMessage is not already null.
+            responseMessage?.Dispose();
+        }
     }
 
     public async Task<double> GetSensorTemperatureAsync(int sensorId)
@@ -55,6 +60,11 @@ public class HardwareApiService(HttpClient httpClient, ILogger<HardwareApiServic
         {
             logger.LogError(e, "Unexpected error fetching temperature for sensor {SensorId}.", sensorId);
             return double.NaN;
+        }
+        finally 
+        {
+            // Manually dispose HttpResponseMessage to avoid socked exhaustion - only if the responseMessage is not already null.
+            responseMessage?.Dispose();
         }
     }
 
