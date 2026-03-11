@@ -11,4 +11,7 @@ public interface IApiService
     /// <param name="requestUri"></param>
     /// <returns></returns>
     Task<string> GetAsync(string requestUri);
+    Task<double> GetSensorTemperatureAsync(int sensorId);
+    Task SetHeaterLevelAsync(int heaterId, int level);
+    Task SetFanStateAsync(int fanId, bool isOn);
 }

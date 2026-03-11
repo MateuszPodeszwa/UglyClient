@@ -22,4 +22,19 @@ public class ApiService(HttpClient httpClient, ILogger<ApiService> logger) : IAp
             return responseMessage.ReasonPhrase ??  "Request failed"; 
         }
     }
+
+    public Task<double> GetSensorTemperatureAsync(int sensorId)
+    {
+        throw new NotImplementedException();
+    }
+
+    public Task SetHeaterLevelAsync(int heaterId, int level)
+    {
+        throw new NotImplementedException();
+    }
+
+    public Task SetFanStateAsync(int fanId, bool isOn)
+    {
+        throw new NotImplementedException();
+    }
 }
