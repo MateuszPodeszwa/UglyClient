@@ -2,7 +2,7 @@ using Microsoft.Extensions.Logging;
 
 namespace BeautifulClient.Services.Api;
 
-public class ApiService(HttpClient httpClient, ILogger<ApiService> logger) : IApiService
+public class HardwareApiService(HttpClient httpClient, ILogger<HardwareApiService> logger) : IHardwareApiService
 {
     public async Task<string> GetAsync(string requestUri)
     {

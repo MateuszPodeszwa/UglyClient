@@ -1,5 +1,4 @@
 using BeautifulClient.Configuration;
-using BeautifulClient.Services;
 using BeautifulClient.Services.Api;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
@@ -11,7 +10,7 @@ public class App(
     IOptions<MySettings> options,
     ILogger<App> logger,
     IOptions<ApiSettings> apiSettings,
-    IApiService apiService)
+    IHardwareApiService hardwareApiService)
 {
     private readonly MySettings _settings = options.Value;
     private readonly ApiSettings _apiSettings = apiSettings.Value;
@@ -27,8 +26,8 @@ public class App(
             messageService.SendMessage(_apiSettings.BaseUrl);
             logger.LogInformation("Greeting message was processed successfully.");
             
-            // messageService.SendMessage(await apiService.GetAsync("500error"));
-            messageService.SendMessage(await apiService.GetAsync("data"));
+            // messageService.SendMessage(await hardwareApiService.GetAsync("500error"));
+            messageService.SendMessage(await hardwareApiService.GetAsync("data"));
         }
         catch (Exception ex)
         {

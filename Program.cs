@@ -38,7 +38,7 @@ internal class Program
         builder.Services.Configure<ApiSettings>(builder.Configuration.GetSection("ApiSettings"));
 
         // Register the Typed Client and configure its default behaviour
-        builder.Services.AddHttpClient<IApiService, ApiService>((serviceProvider, client) =>
+        builder.Services.AddHttpClient<IHardwareApiService, HardwareApiService>((serviceProvider, client) =>
         {
             // Retrieve the merged settings from the DI container
             var settings = serviceProvider.GetRequiredService<IOptions<ApiSettings>>().Value;

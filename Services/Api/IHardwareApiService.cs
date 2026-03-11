@@ -3,7 +3,7 @@ namespace BeautifulClient.Services.Api;
 /// <summary>
 /// Defines a contract between API and application. Lists all actions that API can perform.
 /// </summary>
-public interface IApiService
+public interface IHardwareApiService
 {
     /// <summary>
     /// Returns httpClient.GetAsync with requestUri
