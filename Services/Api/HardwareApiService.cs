@@ -15,12 +15,13 @@ public class HardwareApiService(HttpClient httpClient, ILogger<HardwareApiServic
             responseMessage.EnsureSuccessStatusCode();
             return await responseMessage.Content.ReadAsStringAsync();
         }
-        catch (HttpRequestException e)
+        #region Catch Exceptions
+        catch (HttpRequestException e) 
         {
             logger.LogCritical("Request failed: {HttpResponseMessage}", responseMessage);
             return e.ToString();
         }
-        catch (Exception e)
+        catch (Exception e) 
         {
             logger.LogError(e, "Request for {responseMessage} has encountered exception, {Message}", responseMessage, e.Message);
         
@@ -31,16 +32,19 @@ public class HardwareApiService(HttpClient httpClient, ILogger<HardwareApiServic
             // Manually dispose HttpResponseMessage to avoid socked exhaustion - only if the responseMessage is not already null.
             responseMessage?.Dispose();
         }
+        #endregion
     }
 
     public async Task<double> GetSensorTemperatureAsync(int sensorId)
     {
         HttpResponseMessage responseMessage = null!; try
         {
-            responseMessage = await httpClient.GetAsync($"api/sensors/{sensorId}");
+            responseMessage = await httpClient.GetAsync($"api/sensor/{sensorId}");
+            
             // Throws an HttpRequestException if the status is 4xx or 5xx
             responseMessage.EnsureSuccessStatusCode();
-            var responseMessageContent = await responseMessage.Content.ReadAsStringAsync(); // Promises Double
+            
+            var responseMessageContent = await responseMessage.Content.ReadAsStringAsync();
 
             if (double.TryParse(responseMessageContent, out var temperature))
             {
@@ -51,6 +55,7 @@ public class HardwareApiService(HttpClient httpClient, ILogger<HardwareApiServic
             logger.LogWarning("Sensor {SensorId} returned invalid data format: '{responseMessageContent}'", sensorId, responseMessageContent);
             return double.NaN;
         }
+        #region Catch Exceptions
         catch (HttpRequestException e)
         {
             logger.LogCritical(e, "HTTP request failed for sensor {SensorId}. Status Code: {StatusCode}", sensorId, responseMessage?.StatusCode);
@@ -66,6 +71,7 @@ public class HardwareApiService(HttpClient httpClient, ILogger<HardwareApiServic
             // Manually dispose HttpResponseMessage to avoid socked exhaustion - only if the responseMessage is not already null.
             responseMessage?.Dispose();
         }
+        #endregion
     }
 
     public Task SetHeaterLevelAsync(int heaterId, int level)
