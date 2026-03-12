@@ -1,3 +1,6 @@
+using BeautifulClient.Extensions;
+using BeautifulClient.Utilities.RequestResultUtility;
+
 namespace BeautifulClient.Services.Api;
 
 /// <summary>
@@ -5,20 +8,6 @@ namespace BeautifulClient.Services.Api;
 /// </summary>
 public interface IHardwareApiService
 {
-    /// <summary>
-    /// Sends a GET request to the specified URI and returns the response body as a string.
-    /// </summary>
-    /// <remarks>
-    /// This is the core method for making basic queries. If an exception occurs during the request, 
-    /// the method catches it and returns the string.empty representation instead of throwing.
-    /// All exception's details are logged using ILogger
-    /// </remarks>
-    /// <param name="requestUri">The Uniform Resource Identifier (URI) to request.</param>
-    /// <returns>
-    /// A task representing the asynchronous operation. The task result contains the response content 
-    /// as a string, or the exception details if the request fails.
-    /// </returns>
-    Task<string> GetAsync(string requestUri);
     /// <summary>
     /// Asynchronously retrieves the current temperature reading for a specific sensor.
     /// </summary>
@@ -32,7 +21,7 @@ public interface IHardwareApiService
     /// A task representing the asynchronous operation. The task result contains the temperature 
     /// value, or <see cref="double.NaN"/> if the retrieval or parsing fails.
     /// </returns>
-    public Task<double> GetSensorTemperatureAsync(int sensorId);
+    Task<double> GetSensorTemperatureAsync(int sensorId);
     Task SetHeaterLevelAsync(int heaterId, int level);
     Task SetFanStateAsync(int fanId, bool isOn);
 }
