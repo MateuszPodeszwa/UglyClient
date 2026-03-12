@@ -1,6 +1,9 @@
 using System.Globalization;
+using System.Net;
+using System.Text;
 using BeautifulClient.Configuration;
 using BeautifulClient.Services.Api;
+using BeautifulClient.Utilities.RequestResultUtility;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 
@@ -22,13 +25,8 @@ public class App(
 
         try
         {
-            messageService.SendMessage(Settings.GreetingMessage);
-            messageService.SendMessage(ApiSettings.ApiKey);
-            messageService.SendMessage(ApiSettings.BaseUrl);
-            logger.LogInformation("Greeting message was processed successfully.");
-
             var sensor1 = await hardwareApiService.GetSensorTemperatureAsync(1);
-            messageService.SendMessage(Convert.ToString(sensor1, CultureInfo.CurrentCulture));
+            Console.WriteLine(sensor1);
         }
         catch (Exception ex)
         {
