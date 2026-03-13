@@ -1,4 +1,8 @@
-﻿using System.Reflection;
+﻿#pragma warning disable CS8981 // The type name only contains lower-cased ascii characters. Such names may become reserved for the language.
+global using celc = BeautifulClient.Data.Structs.Temperature.Celcius;
+#pragma warning restore CS8981 // The type name only contains lower-cased ascii characters. Such names may become reserved for the language.
+
+using System.Reflection;
 using BeautifulClient.Configuration;
 using BeautifulClient.Services.Api;
 using BeautifulClient.Utilities;
