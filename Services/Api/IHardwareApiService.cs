@@ -1,27 +1,19 @@
-using BeautifulClient.Extensions;
-using BeautifulClient.Utilities.RequestResultUtility;
+using BeautifulClient.Data;
+using BeautifulClient.Utilities.ErrorHandler;
 
 namespace BeautifulClient.Services.Api;
 
 /// <summary>
-/// Defines a contract between API and application. Lists all actions that API can perform.
+/// Defines the domain-specific contract between the application and the hardware API.
 /// </summary>
+/// <remarks>
+/// <para><b>Purpose:</b> To outline the explicit hardware capabilities supported by the API (e.g., fetching sensor data, toggling fans), entirely distinct from the underlying generic HTTP operations.</para>
+/// <para><b>Strategy:</b> Promotes a thin-client architecture by encapsulating endpoint URIs and data mapping. This enforces the DRY principle and completely decouples the application logic from external API complexities, ensuring the system remains highly testable and maintainable.</para>
+/// <para><b>Pattern:</b> Implements the Service (or Facade) pattern to provide a simplified, strongly-typed interface over the raw <see cref="IApiActions"/> network calls.</para>
+/// </remarks>
 public interface IHardwareApiService
 {
-    /// <summary>
-    /// Asynchronously retrieves the current temperature reading for a specific sensor.
-    /// </summary>
-    /// <remarks>
-    /// This method queries the sensor API endpoint. If the HTTP request fails, the response content 
-    /// cannot be parsed into a valid number, or any other unexpected error occurs, the error is logged 
-    /// and the method gracefully returns <see cref="double.NaN"/>.
-    /// </remarks>
-    /// <param name="sensorId">The unique identifier of the sensor to query.</param>
-    /// <returns>
-    /// A task representing the asynchronous operation. The task result contains the temperature 
-    /// value, or <see cref="double.NaN"/> if the retrieval or parsing fails.
-    /// </returns>
-    Task<double> GetSensorTemperatureAsync(int sensorId);
+    Task<ApiResult<SensorData>> GetSensorTemperatureAsync(int sensorId);
     Task SetHeaterLevelAsync(int heaterId, int level);
     Task SetFanStateAsync(int fanId, bool isOn);
 }
