@@ -6,6 +6,7 @@ using System.Reflection;
 using BeautifulClient.Configuration;
 using BeautifulClient.Services.Api;
 using BeautifulClient.Utilities;
+using BeautifulClient.Utilities.ErrorHandler;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -61,6 +62,7 @@ internal class Program
         // Add Dependencies (DI)
         builder.Services.AddTransient<IMessageService, MessageService>();
         builder.Services.AddSingleton<App>(); // The entry point class for the console logic
+        builder.Services.AddSingleton<ApiResultPipeline>();
         
         using var host = builder.Build();
 
