@@ -1,16 +1,11 @@
-using System.Globalization;
-using System.Net;
-using System.Text;
 using BeautifulClient.Configuration;
 using BeautifulClient.Services.Api;
-using BeautifulClient.Utilities.RequestResultUtility;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 
 namespace BeautifulClient;
 
 public class App(
-    IMessageService messageService,
     IOptions<MySettings> options,
     ILogger<App> logger,
     IOptions<ApiSettings> apiSettings,
