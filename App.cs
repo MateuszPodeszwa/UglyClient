@@ -21,7 +21,16 @@ public class App(
         try
         {
             var sensor1 = await hardwareApiService.GetSensorTemperatureAsync(1);
-            Console.WriteLine(sensor1);
+
+            if (sensor1.IsSuccess)
+            {
+                logger.LogInformation($"Sensor 1: {sensor1.Value.Temperature}");
+            }
+            else
+            {
+                logger.LogError($"Sensor 1: {sensor1.Error.Message}");
+            }
+
         }
         catch (Exception ex)
         {
