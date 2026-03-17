@@ -7,7 +7,6 @@ namespace BeautifulClient;
 
 public class App(
     IOptions<MySettings> options,
-    ILogger<App> logger,
     IOptions<ApiSettings> apiSettings,
     IHardwareApiService hardwareApiService)
 {
@@ -16,27 +15,20 @@ public class App(
 
     public async Task RunAsync()
     {
-        logger.LogInformation("App started running.");
-
+        Console.WriteLine("App started running.");
         try
         {
             var sensor1 = await hardwareApiService.GetSensorTemperatureAsync(1);
 
-            if (sensor1.IsSuccess)
-            {
-                logger.LogInformation($"Sensor 1: {sensor1.Value.Temperature}");
-            }
-            else
-            {
-                logger.LogError($"Sensor 1: {sensor1.Error.Message}");
-            }
-
+            Console.WriteLine(sensor1.IsSuccess
+                ? $"Sensor 1: {sensor1.Value.Temperature}"
+                : $"Sensor 1: {sensor1.Error.Message}");
         }
-        catch (Exception ex)
+        catch (Exception)
         {
-            logger.LogError(ex, "A critical error occurred while sending the message.");
+            Console.WriteLine("Errororororororo");
         }
-        
-        logger.LogInformation("App finished running.");
+
+        Console.WriteLine("App finished running.");
     }
 }

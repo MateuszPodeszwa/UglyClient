@@ -24,22 +24,29 @@ public abstract class ApiActions(HttpClient httpClient) : IApiActions
 
             if (!responseMessage.IsSuccessStatusCode)
             {
-                return (ApiResult<T>) responseMessage.ToError(); // Maps some of the pre-defined errors to ApiResult.Failure().
+                return
+                    (ApiResult<T>)responseMessage
+                        .ToError(); // Maps some of the pre-defined errors to ApiResult.Failure().
             }
-        
+
             var responseMessageContent = await responseMessage.Content.ReadAsStringAsync();
             using JsonDocument doc = JsonDocument.Parse(responseMessageContent);
 
             // The implicit operator automatically wraps this T in ApiResult<T>.Success()
-            return createData(doc.RootElement); 
+            return createData(doc.RootElement);
         }
-        catch (HttpRequestException)
+        // Absolutely do not include any Console.WriteLine in those catch
+        catch (HttpRequestException e)
         {
-            return (ApiResult<T>) Error.NetworkFailure;
+            return (ApiResult<T>)Error.NetworkFailure;
         }
         catch (JsonException)
         {
-            return (ApiResult<T>) Error.InvalidJson;
+            return (ApiResult<T>)Error.InvalidJson;
+        }
+        catch (Exception exception)
+        {
+            return (ApiResult<T>)Error.CustomHttpError(exception.HResult, exception.Message);
         }
     }
 }

@@ -16,7 +16,8 @@ public class HttpPolicies
                 sleepDurationProvider: retryAttempt => TimeSpan.FromSeconds(Math.Pow(2, retryAttempt)),
                 onRetry: (outcome, timespan, retryAttempt, context) =>
                 {
-                    var debug = $"API call failed. Waiting {timespan.TotalSeconds} seconds before retry #{retryAttempt}.";
+                    var debug =
+                        $"API call failed. Waiting {timespan.TotalSeconds} seconds before retry #{retryAttempt}.";
                     logger.LogWarning(debug);
                 });
     }

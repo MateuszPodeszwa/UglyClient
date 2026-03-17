@@ -1,4 +1,7 @@
 // ReSharper disable MemberCanBePrivate.Global
+
+using BeautifulClient.Extensions;
+
 namespace BeautifulClient.Utilities.ErrorHandler;
 
 /// <summary>
@@ -43,7 +46,8 @@ public sealed class ApiResult<T> : ApiResult
 {
     private ApiResult(T? value, bool isSuccess, Error error) : base(isSuccess, error)
     {
-        Value = isSuccess ? value! : throw new InvalidOperationException("Cannot access the value of a failed result.\"");
+        // TODO: This needs re-visiting.
+        Value = value!;
     }
 
     public T Value { get; }
