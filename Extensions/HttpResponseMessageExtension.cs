@@ -39,6 +39,7 @@ public static class HttpResponseMessageExtension
             HttpStatusCode.BadGateway => Error.BadGateway502,
             HttpStatusCode.ServiceUnavailable => Error.ServiceUnavailable503,
             HttpStatusCode.GatewayTimeout => Error.GatewayTimeout504,
+            HttpStatusCode.UnsupportedMediaType => Error.UnsupportedMediaType,
             
             // Fallback for anything else (e.g., 067 I'm a teapot, hehe)
             _ => Error.CustomHttpError((int)response.StatusCode, response.ReasonPhrase ?? "Unknown Error")
