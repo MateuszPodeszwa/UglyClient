@@ -54,6 +54,12 @@ public sealed record Error
     public static Error InvalidJson => new("Payload.InvalidJson", "The API returned malformed or invalid JSON.");
     public static Error MappingError => new("Payload.MappingError", "Failed to map the JSON response to the expected object.");
     
+    // Standard Post Errors
+    public static Error UnsupportedMediaType => new("Http.415", "Unsupported Media Type");
+    
+    // Custom
+    public static Error LocalApiFail => new Error("LocalApi.Fail", "Local api call has failed. Please check if there are any hardware connected to the machine.");
+    
     // Fallback for unlisted HTTP codes
     public static Error CustomHttpError(int statusCode, string reason) 
         => new($"Http.{statusCode}", $"API returned an error: {reason}");

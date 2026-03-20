@@ -1,5 +1,7 @@
 using Microsoft.Extensions.Logging;
 using System.Diagnostics;
+using System.Reflection;
+using BeautifulClient.Extensions;
 
 // ReSharper disable SuggestVarOrType_Elsewhere
 
@@ -16,7 +18,7 @@ namespace BeautifulClient.Utilities.ErrorHandler;
 /// </remarks>
 public class ApiResultPipeline(ILogger<ApiResultPipeline> logger) : IApiPipeline
 {
-    public async Task<ApiResult<TE>> ExecuteAsync<TE>(Func<Task<ApiResult<TE>>> apiCall)
+    public async Task<ApiResult<TE>> ExecuteAsync<TE>(Func<Task<ApiResult<TE>>> apiCall) 
     {
         Stopwatch stopwatch = Stopwatch.StartNew();
         ApiResult<TE> result = await apiCall();
@@ -33,6 +35,30 @@ public class ApiResultPipeline(ILogger<ApiResultPipeline> logger) : IApiPipeline
         else 
         {
             logger.LogInformation("Operation succeeded in {ElapsedMs}ms", elapsedMs);
+            logger.LogInformation("Returned {Result} with contents {ToString}", result.Value.GetType().Name, result.Value.ToString());
+        }
+        
+        return result;
+    }
+
+    public async Task<ApiResult> ExecuteAsync(Func<Task<ApiResult>> apiCall)
+    {
+        Stopwatch stopwatch = Stopwatch.StartNew();
+        ApiResult result = await apiCall();
+
+        stopwatch.Stop();
+        var elapsedMs = stopwatch.Elapsed.TotalMilliseconds;
+        if (result.IsFailure)
+        {
+            logger.LogWarning("Operation failed after {ElapsedMs}ms | Code: {ErrorCode} | Message: {ErrorMessage}",
+                elapsedMs,
+                result.Error.Code,
+                result.Error.Message);
+        }
+        else 
+        {
+            logger.LogInformation("Operation succeeded in {ElapsedMs}ms", elapsedMs);
+            logger.LogInformation("Returned {Result} with no contents", result.GetType().Name);
         }
         
         return result;

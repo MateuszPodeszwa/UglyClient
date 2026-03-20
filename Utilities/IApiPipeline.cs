@@ -1,3 +1,4 @@
+using BeautifulClient.Extensions;
 using BeautifulClient.Utilities.ErrorHandler;
 
 namespace BeautifulClient.Utilities;
@@ -13,4 +14,5 @@ namespace BeautifulClient.Utilities;
 public interface IApiPipeline
 {
     public Task<ApiResult<TE>> ExecuteAsync<TE>(Func<Task<ApiResult<TE>>> apiCall);
+    public Task<ApiResult> ExecuteAsync(Func<Task<ApiResult>> apiCall);
 }
