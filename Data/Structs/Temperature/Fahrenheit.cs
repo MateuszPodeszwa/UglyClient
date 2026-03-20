@@ -2,6 +2,7 @@
 
 namespace BeautifulClient.Data.Structs.Temperature;
 
+[Obsolete("[WIP] Not Implemented")]
 public record struct Fahrenheit(double Value) : IComparable<Fahrenheit>, IFormattable, ITemperature
 {
     public string ToString(string? format, IFormatProvider? formatProvider)

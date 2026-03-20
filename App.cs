@@ -1,5 +1,6 @@
 using BeautifulClient.Configuration;
 using BeautifulClient.Data;
+using BeautifulClient.Data.Dto;
 using BeautifulClient.Services.Api;
 using BeautifulClient.Utilities.ErrorHandler;
 using Microsoft.Extensions.Options;

@@ -1,5 +1,6 @@
 using System.Diagnostics.CodeAnalysis;
 using BeautifulClient.Data;
+using BeautifulClient.Data.Dto;
 using BeautifulClient.Services.Api.Actions;
 using BeautifulClient.Utilities.ErrorHandler;
 
