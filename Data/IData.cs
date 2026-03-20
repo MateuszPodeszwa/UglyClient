@@ -1,4 +1,4 @@
-namespace BeautifulClient.Extensions;
+namespace BeautifulClient.Data;
 
 /// <summary>
 /// Defines the foundational contract for all data transfer objects (DTOs) and entities processed by the API or database.
@@ -13,10 +13,10 @@ public interface IData
     /// <summary>
     /// The unique identifier for the entity.
     /// </summary>
-    public int Id { get; set; }
+    public int Id { get; init; }
     
     /// <summary>
     /// The unparsed, raw JSON string received from the API, preserved for debugging or secondary processing.
     /// </summary>
-    public string? RawJson { get; init; }
+    public string? RawJson { get; set; }
 }

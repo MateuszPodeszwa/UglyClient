@@ -1,11 +1,12 @@
 using BeautifulClient.Extensions;
 
-namespace BeautifulClient.Data;
+namespace BeautifulClient.Data.Dto;
 
+[Obsolete]
 public class HeaterData : IData
 {
-    public int Id { get; set; }
-    public string? RawJson { get; init; }
+    public int Id { get; init; }
+    public string? RawJson { get; set; }
     
     public override string ToString()
     {
