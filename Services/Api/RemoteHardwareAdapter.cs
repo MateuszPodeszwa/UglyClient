@@ -14,7 +14,7 @@ namespace BeautifulClient.Services.Api;
 /// <para><b>Pattern:</b> Functions as a Facade and an Adapter. It provides a highly simplified interface for the client to consume, whilst adapting raw JSON responses into the application's internal, strongly-typed domain models.</para>
 /// </remarks>
 [SuppressMessage("ReSharper", "ArrangeObjectCreationWhenTypeNotEvident")]
-public class HardwareApiService(
+public class RemoteHardwareAdapter(
     HttpClient httpClient,
     ApiResultPipeline apiResultPipeline
     ) : ApiActions(httpClient), IHardwareApiService
@@ -30,20 +30,20 @@ public class HardwareApiService(
             {
                 // Adapter, ITemperature do not care whether it's int, double, float, string etc.
                 // It gets the job done.
-                Temperature = json.GetProperty("Temperature").GetSingle(), 
+                Id =  sensorId,
+                Temperature = json.GetDouble(), 
                 RawJson = json.GetRawText() 
             }
         ));
     }
-
-    [Obsolete("WIP",true)]
-    public Task SetHeaterLevelAsync(int heaterId, int level)
+    
+    public async Task<ApiResult> SetHeaterLevelAsync(int heaterId, int level)
     {
-        throw new NotImplementedException();
+        return await apiResultPipeline.ExecuteAsync(() => SetAsync<int>($"api/heat/{heaterId}", level));
     }
-    [Obsolete("WIP", true)]
-    public Task SetFanStateAsync(int fanId, bool isOn)
+    
+    public async Task<ApiResult> SetFanStateAsync(int fanId, bool isOn)
     {
-        throw new NotImplementedException();
+        return await apiResultPipeline.ExecuteAsync(() => SetAsync<bool>($"api/fans/{fanId}", isOn));
     }
 }
