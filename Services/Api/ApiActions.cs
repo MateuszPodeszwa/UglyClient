@@ -1,3 +1,4 @@
+using System.Net.Http.Json;
 using System.Text.Json;
 using BeautifulClient.Extensions;
 using BeautifulClient.Utilities.ErrorHandler;
@@ -47,6 +48,34 @@ public abstract class ApiActions(HttpClient httpClient) : IApiActions
         catch (Exception exception)
         {
             return (ApiResult<T>)Error.CustomHttpError(exception.HResult, exception.Message);
+        }
+    }
+
+    // Set function that returns no value back, only confirmation.
+    public async Task<ApiResult> SetAsync<TRequest>(string requestUri, TRequest payload)
+    {
+        try
+        {
+            using HttpResponseMessage responseMessage = await httpClient.PostAsJsonAsync(requestUri, payload);
+
+            if (!responseMessage.IsSuccessStatusCode)
+            {
+                return (ApiResult) responseMessage.ToError();
+            }
+
+            return ApiResult.Success();
+        }
+        catch (HttpRequestException)
+        {
+            return (ApiResult)Error.NetworkFailure;
+        }
+        catch (JsonException)
+        {
+            return (ApiResult)Error.InvalidJson;
+        }
+        catch (Exception exception)
+        {
+            return (ApiResult)Error.CustomHttpError(exception.HResult, exception.Message);
         }
     }
 }

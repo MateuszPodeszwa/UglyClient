@@ -14,6 +14,6 @@ namespace BeautifulClient.Services.Api;
 public interface IHardwareApiService
 {
     Task<ApiResult<SensorData>> GetSensorTemperatureAsync(int sensorId);
-    Task SetHeaterLevelAsync(int heaterId, int level);
-    Task SetFanStateAsync(int fanId, bool isOn);
+    Task<ApiResult> SetHeaterLevelAsync(int heaterId, int level);
+    Task<ApiResult> SetFanStateAsync(int fanId, bool isOn);
 }
