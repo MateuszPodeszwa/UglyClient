@@ -1,9 +1,8 @@
-using System.Numerics;
 using System.Text.Json;
 using BeautifulClient.Extensions;
 using BeautifulClient.Utilities.ErrorHandler;
 
-namespace BeautifulClient.Services.Api;
+namespace BeautifulClient.Services.Api.Actions;
 
 /// <summary>
 /// Defines the contract for standard CRUD operations executed against an external API.

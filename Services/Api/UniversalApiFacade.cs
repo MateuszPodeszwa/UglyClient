@@ -1,13 +1,14 @@
 using BeautifulClient.Data;
+using BeautifulClient.Services.Api.Adapters;
 using BeautifulClient.Utilities.ErrorHandler;
 using Microsoft.Extensions.Logging;
 
 namespace BeautifulClient.Services.Api;
 
 public class UniversalApiFacade(
-    LocalHardwareAdapter localService,
-    RemoteHardwareAdapter remoteService
-) : IHardwareApiService
+    LocalAdapter localService,
+    RemoteAdapter remoteService
+) : IApiService
 {
     public async Task<ApiResult<SensorData>> GetSensorTemperatureAsync(int sensorId)
     {

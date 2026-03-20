@@ -3,7 +3,7 @@ using System.Text.Json;
 using BeautifulClient.Extensions;
 using BeautifulClient.Utilities.ErrorHandler;
 
-namespace BeautifulClient.Services.Api;
+namespace BeautifulClient.Services.Api.Actions;
 
 /// <summary>
 /// Provides a foundational, reusable implementation of the <see cref="IApiActions"/> interface for executing generic API requests.
@@ -17,6 +17,7 @@ namespace BeautifulClient.Services.Api;
 public abstract class ApiActions(HttpClient httpClient) : IApiActions
 {
     // ReSharper disable once MemberCanBePrivate.Global
+    // createData works as low-level adapter, it forces one to define way the data transfer object is created
     public virtual async Task<ApiResult<T>> GetAsync<T>(string requestUri, Func<JsonElement, T> createData) where T : IData
     {
         try

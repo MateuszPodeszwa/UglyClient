@@ -1,8 +1,9 @@
 using System.Diagnostics.CodeAnalysis;
 using BeautifulClient.Data;
+using BeautifulClient.Services.Api.Actions;
 using BeautifulClient.Utilities.ErrorHandler;
 
-namespace BeautifulClient.Services.Api;
+namespace BeautifulClient.Services.Api.Adapters;
 /// <summary>
 /// Provides the concrete implementation for communicating with the domain-specific hardware API endpoints.
 /// </summary>
@@ -14,10 +15,10 @@ namespace BeautifulClient.Services.Api;
 /// <para><b>Pattern:</b> Functions as a Facade and an Adapter. It provides a highly simplified interface for the client to consume, whilst adapting raw JSON responses into the application's internal, strongly-typed domain models.</para>
 /// </remarks>
 [SuppressMessage("ReSharper", "ArrangeObjectCreationWhenTypeNotEvident")]
-public class RemoteHardwareAdapter(
+public class RemoteAdapter(
     HttpClient httpClient,
     ApiResultPipeline apiResultPipeline
-    ) : ApiActions(httpClient), IHardwareApiService
+    ) : ApiActions(httpClient), IApiService
 {
     // The return type MUST be an ApiResult so the caller can check for success/failure
     public async Task<ApiResult<SensorData>> GetSensorTemperatureAsync(int sensorId)
@@ -39,11 +40,11 @@ public class RemoteHardwareAdapter(
     
     public async Task<ApiResult> SetHeaterLevelAsync(int heaterId, int level)
     {
-        return await apiResultPipeline.ExecuteAsync(() => SetAsync<int>($"api/heat/{heaterId}", level));
+        return await apiResultPipeline.ExecuteAsync(() => SetAsync($"api/heat/{heaterId}", level));
     }
     
     public async Task<ApiResult> SetFanStateAsync(int fanId, bool isOn)
     {
-        return await apiResultPipeline.ExecuteAsync(() => SetAsync<bool>($"api/fans/{fanId}", isOn));
+        return await apiResultPipeline.ExecuteAsync(() => SetAsync($"api/fans/{fanId}", isOn));
     }
 }

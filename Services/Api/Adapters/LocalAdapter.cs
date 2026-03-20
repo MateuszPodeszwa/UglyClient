@@ -1,15 +1,17 @@
 using System.Text.Json;
 using BeautifulClient.Data;
+using BeautifulClient.Services.Api.Actions;
 using BeautifulClient.Services.Hardware;
 using BeautifulClient.Utilities.ErrorHandler;
+
 // ReSharper disable All
 
-namespace BeautifulClient.Services.Api;
+namespace BeautifulClient.Services.Api.Adapters;
 
-public class LocalHardwareAdapter(
+public class LocalAdapter(
     HttpClient httpClient,
     ApiResultPipeline apiResultPipeline
-) : ApiActions(httpClient), IHardwareApiService
+) : ApiActions(httpClient), IApiService
 {
     public async Task<ApiResult<SensorData>> GetSensorTemperatureAsync(int sensorId)
     {
@@ -22,11 +24,11 @@ public class LocalHardwareAdapter(
         
         return await apiResultPipeline.ExecuteAsync((() => GetAsync<SensorData>(
             data.ToString(),
-            element => new()
+            json => new()
             {
                 Id =  sensorId,
-                Temperature = element.GetDouble(),
-                RawJson =  element.GetRawText()
+                Temperature = json.GetDouble(),
+                RawJson =  json.GetRawText()
             }
             )));
     }
