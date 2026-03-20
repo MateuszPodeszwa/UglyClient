@@ -43,7 +43,7 @@ internal class Program
         builder.Services.Configure<ApiSettings>(builder.Configuration.GetSection("ApiSettings"));
 
         // Register the Typed Client and configure its default behaviour
-        builder.Services.AddHttpClient<IHardwareApiService, HardwareApiService>((serviceProvider, client) =>
+        builder.Services.AddHttpClient<RemoteHardwareAdapter>((serviceProvider, client) =>
         {
             // Retrieve the merged settings from the DI container
             var settings = serviceProvider.GetRequiredService<IOptions<ApiSettings>>().Value;
@@ -63,6 +63,8 @@ internal class Program
         builder.Services.AddTransient<IMessageService, MessageService>();
         builder.Services.AddSingleton<App>(); // The entry point class for the console logic
         builder.Services.AddSingleton<ApiResultPipeline>();
+        builder.Services.AddTransient<LocalHardwareAdapter>();
+        builder.Services.AddTransient<IHardwareApiService, UniversalApiFacade>();
         
         using var host = builder.Build();
 
