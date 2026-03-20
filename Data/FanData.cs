@@ -8,6 +8,7 @@ public class FanData : IData
     public string? RawJson { get; init; }
     public override string ToString()
     {
+        // DtoActions is relying on this override.
         return RawJson ?? string.Empty;
     }
 }

@@ -33,6 +33,7 @@ public class SensorData : IData
     /// <returns>The <see cref="RawJson"/> string, or an empty string if the raw payload is null.</returns>
     public override string ToString()
     {
+        // DtoActions is relying on this override.
         return RawJson ?? string.Empty;
     }
 }
