@@ -1,6 +1,6 @@
 using System.Text.Json;
 using BeautifulClient.Data;
-using BeautifulClient.Data.Dto;
+using BeautifulClient.Data.Objects;
 using BeautifulClient.Services.Api.Actions;
 using BeautifulClient.Services.Hardware;
 using BeautifulClient.Utilities.ErrorHandler;

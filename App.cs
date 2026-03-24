@@ -1,6 +1,7 @@
 using BeautifulClient.Configuration;
 using BeautifulClient.Data;
-using BeautifulClient.Data.Dto;
+using BeautifulClient.Data.Objects;
+using BeautifulClient.Extensions;
 using BeautifulClient.Services.Api;
 using BeautifulClient.Utilities.ErrorHandler;
 using Microsoft.Extensions.Options;
@@ -19,7 +20,7 @@ public class App(
     IApiService apiService)
 {
     private MySettings Settings { get; } = options.Value;
-    private ApiSettings ApiSettings { get; } = apiSettings.Value;
+    private ApiSettings ApiSettings { get; } = apiSettings.Value;   
 
     public async Task RunAsync()
     {
@@ -27,15 +28,18 @@ public class App(
         try
         {
             ApiResult<SensorData> sensor1 = await apiService.GetSensorTemperatureAsync(1);
-            Console.WriteLine($"Sensor1: {sensor1.Value.Temperature}");
+            SensorData sensor1Data = sensor1.Value;
+            
+            Console.WriteLine($"Initial {nameof(sensor1Data)} modified? {sensor1Data.IsModified}, value: {sensor1Data.Temperature}");
+            
+            sensor1Data.Temperature = 21;
+            Console.WriteLine($"Is {nameof(sensor1Data)} modified? {sensor1Data.IsModified}, value: {sensor1Data.Temperature}");
 
-            ApiResult<SensorData> updatedSensor1 = sensor1;
-
-            Console.WriteLine("Calling Local SetAsync");
-            var setTemperature = await apiService.SetHeaterLevelAsync(1, 1);
-
-            Console.WriteLine("Calling Hardware GetAsync");
-            var hardwareSensor1 = await apiService.GetSensorTemperatureAsync(5);
+            await sensor1Data.SaveOnChangesAsync();
+            
+            // sensor1.Value.Temperature = 7;
+            // Console.WriteLine($"Is {nameof(sensor1Data)} modified? {sensor1Data.IsModified}, value: {sensor1Data.Temperature}");
+            
         }
         catch (Exception e)
         {

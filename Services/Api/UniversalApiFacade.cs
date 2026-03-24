@@ -1,5 +1,5 @@
 using BeautifulClient.Data;
-using BeautifulClient.Data.Dto;
+using BeautifulClient.Data.Objects;
 using BeautifulClient.Services.Api.Adapters;
 using BeautifulClient.Utilities.ErrorHandler;
 using Microsoft.Extensions.Logging;

@@ -1,6 +1,5 @@
 using System.Diagnostics.CodeAnalysis;
-using BeautifulClient.Data;
-using BeautifulClient.Data.Dto;
+using BeautifulClient.Data.Objects;
 using BeautifulClient.Services.Api.Actions;
 using BeautifulClient.Utilities.ErrorHandler;
 
@@ -25,17 +24,15 @@ public class RemoteAdapter(
     public async Task<ApiResult<SensorData>> GetSensorTemperatureAsync(int sensorId)
     {
         // Pass the raw, unexecuted method into the pipeline via a lambda.
-        // The pipeline handles the 'await' internally.
         return await apiResultPipeline.ExecuteAsync(() => GetAsync<SensorData>(
             $"api/sensor/{sensorId}",
             json => new()
-            {
-                // Adapter, ITemperature do not care whether it's int, double, float, string etc.
-                // It gets the job done.
-                Id =  sensorId,
-                Temperature = json.GetDouble(), 
-                RawJson = json.GetRawText() 
-            }
+                {
+                    Id =  sensorId,
+                    Temperature = json.GetDouble(), 
+                    RawJson = json.GetRawText(),
+                    SaveAction = () => throw new NotImplementedException("SaveAction for DTO States is not yet implemented") // [WIP] : This can be some algorithm.
+                }
         ));
     }
     
