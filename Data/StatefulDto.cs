@@ -10,19 +10,26 @@ namespace BeautifulClient.Data;
 public abstract class StatefulDto<TObject> where TObject : StatefulDto<TObject>
 {
     public bool IsModified { get; private set; }
-    public required Func<Task<ApiResult>>? SaveAction { get; init; }
+    public required Func<TObject, Task<ApiResult>>? SaveAction { get; init; }
     
     private readonly Dictionary<string, object?> _originalValues = new();
 
     protected TField SetProperty<TField>(ref TField oldObj, TField newObj, [CallerMemberName] string propertyName = "")
     {
+        bool isFirstTime = _originalValues.TryAdd(propertyName, newObj);
+
+        // Exit early if the state hasn't changed.
         if (EqualityComparer<TField>.Default.Equals(oldObj, newObj))
         {
-            return oldObj; // Value hasn't changed
+            return oldObj; 
         }
 
-        // First time value is set/created doesn't matter.
-        IsModified = !_originalValues.TryAdd(propertyName, newObj);
+        // Mark as modified ONLY if this is the following mutation.
+        if (!isFirstTime)
+        {
+            IsModified = true;
+        }
+        
         oldObj = newObj;
         return newObj;
     }
@@ -42,7 +49,7 @@ public abstract class StatefulDto<TObject> where TObject : StatefulDto<TObject>
                 $"SaveAction was not configured for {typeof(TObject).Name}.");
         }
         
-        ApiResult response = await SaveAction();
+        ApiResult response = await SaveAction((TObject)this);
         
         if (response.IsSuccess) AcceptChanges();
         else Revert(); 
