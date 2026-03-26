@@ -15,7 +15,13 @@ namespace BeautifulClient.Services.Api;
 /// </remarks>
 public interface IApiService
 {
+    // SensorData
     Task<ApiResult<SensorData>> GetSensorTemperatureAsync(int sensorId);
+    
+    // HeaterData
     Task<ApiResult> SetHeaterLevelAsync(int heaterId, int level);
+    
+    // FanData
     Task<ApiResult> SetFanStateAsync(int fanId, bool isOn);
+    Task<ApiResult<FanData>> GetFanDataAsync(int fanId);
 }

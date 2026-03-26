@@ -34,18 +34,32 @@ public class RemoteAdapter(
                     Id =  sensorId,
                     Temperature = json.GetDouble(), 
                     RawJson = json.GetRawText(),
-                    SaveAction = () => throw new NotImplementedException("SaveAction for DTO States is not yet implemented") // [WIP] : This can be some algorithm.
+                    SaveAction = (sensor) => throw new NotImplementedException($"SaveAction for DTO States is not yet implemented, {sensor}") // [WIP] : This can be some algorithm.
                 }
         ));
-    }
-    
-    public async Task<ApiResult> SetHeaterLevelAsync(int heaterId, int level)
-    {
-        return await apiResultPipeline.ExecuteAsync(() => SetAsync($"api/heat/{heaterId}", level));
     }
     
     public async Task<ApiResult> SetFanStateAsync(int fanId, bool isOn)
     {
         return await apiResultPipeline.ExecuteAsync(() => SetAsync($"api/fans/{fanId}", isOn));
+    }
+
+    public async Task<ApiResult<FanData>> GetFanDataAsync(int fanId)
+    {
+        return await apiResultPipeline.ExecuteAsync((() => GetAsync<FanData>(
+            $"api/Fans/{fanId}/state",
+            json => new(objectSetterPipeline)
+            { 
+                Id = json.GetProperty("id").GetInt32(), 
+                Status =  json.GetProperty("isOn").GetBoolean(), 
+                RawJson = json.GetRawText(),
+                SaveAction = (fan) => this.SetFanStateAsync(fanId, fan.Status)
+            }
+        )));
+    }
+
+    public async Task<ApiResult> SetHeaterLevelAsync(int heaterId, int level)
+    {
+        return await apiResultPipeline.ExecuteAsync(() => SetAsync($"api/heat/{heaterId}", level));
     }
 }

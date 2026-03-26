@@ -35,10 +35,10 @@ public class ApiResultPipeline(ILogger<ApiResultPipeline> logger) : IApiPipeline
         else 
         {
             logger.LogInformation("Operation succeeded in {ElapsedMs}ms", elapsedMs);
-            logger.LogInformation("Returned {Result} with contents {ToString}", result.Value.GetType().Name, result.Value.ToString());
+            logger.LogInformation("Returned {Result} with contents {ToString}", result?.Value?.GetType().Name, result?.Value?.ToString());
         }
         
-        return result;
+        return result!;
     }
 
     public async Task<ApiResult> ExecuteAsync(Func<Task<ApiResult>> apiCall)

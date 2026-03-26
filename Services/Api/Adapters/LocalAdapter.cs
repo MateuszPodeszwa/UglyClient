@@ -31,7 +31,7 @@ public class LocalAdapter(
                 Id =  sensorId,
                 Temperature = json.GetDouble(),
                 RawJson =  json.GetRawText(),
-                SaveAction = () => throw new NotImplementedException("SaveAction for DTO States is not yet implemented") // [WIP] : This can be some algorithm.
+                SaveAction = (sensor) => throw new NotImplementedException($"SaveAction for DTO States is not yet implemented, {sensor}") // [WIP] : This can be some algorithm.
             }
             )));
     }
@@ -44,6 +44,11 @@ public class LocalAdapter(
     public Task<ApiResult> SetFanStateAsync(int fanId, bool isOn)
     {
         return Task.FromResult((ApiResult)Error.LocalApiFail);
+    }
+
+    public Task<ApiResult<FanData>> GetFanDataAsync(int fanId)
+    {
+        return Task.FromResult((ApiResult<FanData>)Error.LocalApiFail);
     }
 
     // I decided to implement string in the base GetAsync as every type and class has .ToString method.

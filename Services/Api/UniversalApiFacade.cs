@@ -46,4 +46,16 @@ public class UniversalApiFacade(
         
         return await remoteService.SetFanStateAsync(fanId, isOn);
     }
+
+    public async Task<ApiResult<FanData>> GetFanDataAsync(int fanId)
+    {
+        var localResult = await localService.GetFanDataAsync(fanId);
+        
+        if (localResult.IsSuccess)
+        {
+            return localResult;
+        }
+        
+        return await remoteService.GetFanDataAsync(fanId);
+    }
 }
