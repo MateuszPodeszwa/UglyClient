@@ -2,6 +2,8 @@ using System.Diagnostics.CodeAnalysis;
 using BeautifulClient.Data.Objects;
 using BeautifulClient.Services.Api.Actions;
 using BeautifulClient.Utilities.ErrorHandler;
+using BeautifulClient.Utilities.Pipelines;
+using Microsoft.Extensions.Logging;
 
 namespace BeautifulClient.Services.Api.Adapters;
 /// <summary>
@@ -17,7 +19,8 @@ namespace BeautifulClient.Services.Api.Adapters;
 [SuppressMessage("ReSharper", "ArrangeObjectCreationWhenTypeNotEvident")]
 public class RemoteAdapter(
     HttpClient httpClient,
-    ApiResultPipeline apiResultPipeline
+    ApiResultPipeline apiResultPipeline,
+    ObjectSetterPipeline objectSetterPipeline
     ) : ApiActions(httpClient), IApiService
 {
     // The return type MUST be an ApiResult so the caller can check for success/failure
@@ -26,7 +29,7 @@ public class RemoteAdapter(
         // Pass the raw, unexecuted method into the pipeline via a lambda.
         return await apiResultPipeline.ExecuteAsync(() => GetAsync<SensorData>(
             $"api/sensor/{sensorId}",
-            json => new()
+            json => new(objectSetterPipeline)
                 {
                     Id =  sensorId,
                     Temperature = json.GetDouble(), 

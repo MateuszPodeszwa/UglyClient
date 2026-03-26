@@ -4,6 +4,7 @@ using BeautifulClient.Data.Objects;
 using BeautifulClient.Services.Api.Actions;
 using BeautifulClient.Services.Hardware;
 using BeautifulClient.Utilities.ErrorHandler;
+using BeautifulClient.Utilities.Pipelines;
 
 // ReSharper disable All
 
@@ -25,11 +26,12 @@ public class LocalAdapter(
         
         return await apiResultPipeline.ExecuteAsync((() => GetAsync<SensorData>(
             data.ToString(),
-            json => new()
+            json => new(null!)
             {
                 Id =  sensorId,
                 Temperature = json.GetDouble(),
-                RawJson =  json.GetRawText()
+                RawJson =  json.GetRawText(),
+                SaveAction = () => throw new NotImplementedException("SaveAction for DTO States is not yet implemented") // [WIP] : This can be some algorithm.
             }
             )));
     }
