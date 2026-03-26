@@ -14,19 +14,20 @@ public abstract class StatefulDto<TObject> where TObject : StatefulDto<TObject>
     
     private readonly Dictionary<string, object?> _originalValues = new();
 
-    protected bool SetProperty<TField>(ref TField oldObj, TField newObj, [CallerMemberName] string propertyName = "")
+    protected TField SetProperty<TField>(ref TField oldObj, TField newObj, [CallerMemberName] string propertyName = "")
     {
         if (EqualityComparer<TField>.Default.Equals(oldObj, newObj))
         {
-            return false; // Value hasn't changed
+            return oldObj; // Value hasn't changed
         }
 
         // First time value is set/created doesn't matter.
         IsModified = !_originalValues.TryAdd(propertyName, newObj);
         oldObj = newObj;
-        return true;
+        return newObj;
     }
     
+    // TODO: Consider extension method.
     public async Task<ApiResult> SaveOnChangesAsync()
     {
         if (!IsModified)
