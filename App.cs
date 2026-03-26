@@ -1,9 +1,9 @@
 using BeautifulClient.Configuration;
-using BeautifulClient.Data;
 using BeautifulClient.Data.Objects;
-using BeautifulClient.Extensions;
 using BeautifulClient.Services.Api;
+using BeautifulClient.UI;
 using BeautifulClient.Utilities.ErrorHandler;
+using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 
 namespace BeautifulClient;
@@ -15,6 +15,7 @@ namespace BeautifulClient;
 // to the correct (corresponding) sensor, allowing it to call .Update()
 
 public class App(
+    ILogger<App> logger,
     IOptions<MySettings> options,
     IOptions<ApiSettings> apiSettings,
     IApiService apiService)
@@ -24,28 +25,50 @@ public class App(
 
     public async Task RunAsync()
     {
-        Console.WriteLine("App started running.");
+        logger.LogInformation($"""
+                               
+                               ----------------------------------------
+                               Starting {nameof(App)}
+                               ----------------------------------------
+                               """);
+        
         try
         {
-            ApiResult<SensorData> sensor1 = await apiService.GetSensorTemperatureAsync(1);
-            SensorData sensor1Data = sensor1.Value;
-            
-            Console.WriteLine($"Initial {nameof(sensor1Data)} modified? {sensor1Data.IsModified}, value: {sensor1Data.Temperature}");
-            
-            sensor1Data.Temperature = 21;
-            Console.WriteLine($"Is {nameof(sensor1Data)} modified? {sensor1Data.IsModified}, value: {sensor1Data.Temperature}");
+            ApiResult<FanData> fanData1 = await apiService.GetFanDataAsync(2);
 
-            await sensor1Data.SaveOnChangesAsync();
-            
-            // sensor1.Value.Temperature = 7;
-            // Console.WriteLine($"Is {nameof(sensor1Data)} modified? {sensor1Data.IsModified}, value: {sensor1Data.Temperature}");
-            
+            if (fanData1.IsSuccess)
+            {
+                Console.WriteLine($"Fan data retrieved {fanData1.Value}.");
+                
+                var fanData = fanData1.Value;
+                
+                fanData.Status = true;
+
+                ApiResult updateResult = await fanData.SaveOnChangesAsync();
+
+                if (updateResult.IsSuccess)
+                {
+                    Console.WriteLine($"Fan data saved {fanData1.Value}.");
+                    
+                    ApiResult<FanData> fanData1_2 = await apiService.GetFanDataAsync(2);
+
+                    if (fanData1_2.IsSuccess)
+                    {
+                        Console.WriteLine($"Fan data saved-verified? {fanData1_2.Value}.");
+                    }
+                }
+            }
         }
         catch (Exception e)
         {
             Console.WriteLine(e);
         }
 
-        Console.WriteLine("App finished running.");
+        logger.LogInformation($"""
+                               
+                               ----------------------------------------
+                               Ending {nameof(App)}
+                               ----------------------------------------
+                               """);
     }
 }
