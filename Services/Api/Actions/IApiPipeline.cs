@@ -1,7 +1,6 @@
-using BeautifulClient.Extensions;
 using BeautifulClient.Utilities.ErrorHandler;
 
-namespace BeautifulClient.Utilities;
+namespace BeautifulClient.Services.Api.Actions;
 
 /// <summary>
 /// Defines the contract for a centralised execution pipeline that wraps API calls.
