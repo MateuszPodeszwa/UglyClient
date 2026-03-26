@@ -1,11 +1,11 @@
-using Microsoft.Extensions.Logging;
 using System.Diagnostics;
-using System.Reflection;
-using BeautifulClient.Extensions;
+using BeautifulClient.Services.Api.Actions;
+using BeautifulClient.Utilities.ErrorHandler;
+using Microsoft.Extensions.Logging;
 
 // ReSharper disable SuggestVarOrType_Elsewhere
 
-namespace BeautifulClient.Utilities.ErrorHandler;
+namespace BeautifulClient.Utilities.Pipelines;
 
 /// <summary>
 /// Acts as a centralised execution pipeline for all API calls within the application.
