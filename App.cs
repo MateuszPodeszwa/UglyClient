@@ -2,9 +2,11 @@ using BeautifulClient.Configuration;
 using BeautifulClient.Data.Objects;
 using BeautifulClient.Services.Api;
 using BeautifulClient.UI;
+using BeautifulClient.UI.Pages;
 using BeautifulClient.Utilities.ErrorHandler;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
+using Spectre.Console;
 
 namespace BeautifulClient;
 
@@ -25,50 +27,30 @@ public class App(
 
     public async Task RunAsync()
     {
-        logger.LogInformation($"""
-                               
-                               ----------------------------------------
-                               Starting {nameof(App)}
-                               ----------------------------------------
-                               """);
+        AppActivity("Starting");
         
         try
         {
-            ApiResult<FanData> fanData1 = await apiService.GetFanDataAsync(2);
-
-            if (fanData1.IsSuccess)
-            {
-                Console.WriteLine($"Fan data retrieved {fanData1.Value}.");
-                
-                var fanData = fanData1.Value;
-                
-                fanData.Status = true;
-
-                ApiResult updateResult = await fanData.SaveOnChangesAsync();
-
-                if (updateResult.IsSuccess)
-                {
-                    Console.WriteLine($"Fan data saved {fanData1.Value}.");
-                    
-                    ApiResult<FanData> fanData1_2 = await apiService.GetFanDataAsync(2);
-
-                    if (fanData1_2.IsSuccess)
-                    {
-                        Console.WriteLine($"Fan data saved-verified? {fanData1_2.Value}.");
-                    }
-                }
-            }
+            HomePage homePage = new HomePage(apiService);
+            await homePage.RunAsync();
         }
         catch (Exception e)
         {
             Console.WriteLine(e);
         }
 
-        logger.LogInformation($"""
-                               
-                               ----------------------------------------
-                               Ending {nameof(App)}
-                               ----------------------------------------
-                               """);
+        AppActivity("Ending");
+        return;
+
+        void AppActivity(string activity)
+        {
+            logger.LogInformation
+            ($"""
+                    
+              ----------------------------------------
+              {activity} {nameof(App)}
+              ----------------------------------------
+              """);
+        }
     }
 }
