@@ -41,6 +41,11 @@ public class LocalAdapter(
         return Task.FromResult((ApiResult)Error.LocalApiFail);
     }
 
+    public Task<ApiResult<HeaterData>> GetHeaterDataAsync(int fanId)
+    {
+        return Task.FromResult((ApiResult<HeaterData>)Error.LocalApiFail);
+    }
+
     public Task<ApiResult> SetFanStateAsync(int fanId, bool isOn)
     {
         return Task.FromResult((ApiResult)Error.LocalApiFail);

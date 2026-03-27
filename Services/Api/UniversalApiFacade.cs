@@ -1,8 +1,6 @@
-using BeautifulClient.Data;
 using BeautifulClient.Data.Objects;
 using BeautifulClient.Services.Api.Adapters;
 using BeautifulClient.Utilities.ErrorHandler;
-using Microsoft.Extensions.Logging;
 
 namespace BeautifulClient.Services.Api;
 
@@ -33,6 +31,18 @@ public class UniversalApiFacade(
         }
 
         return await remoteService.SetHeaterLevelAsync(heaterId, level);
+    }
+
+    public async Task<ApiResult<HeaterData>> GetHeaterDataAsync(int heaterId)
+    {
+        var localResult = await localService.GetHeaterDataAsync(heaterId);
+        
+        if (localResult.IsSuccess)
+        {
+            return localResult;
+        }
+        
+        return await remoteService.GetHeaterDataAsync(heaterId);
     }
 
     public async Task<ApiResult> SetFanStateAsync(int fanId, bool isOn)

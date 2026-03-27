@@ -38,7 +38,20 @@ public class RemoteAdapter(
                 }
         ));
     }
-    
+
+    public async Task<ApiResult<HeaterData>> GetHeaterDataAsync(int heaterId)
+    {
+        return await apiResultPipeline.ExecuteAsync((() => GetAsync<HeaterData>(
+            $"api/heater/{heaterId}",
+            json => new (objectSetterPipeline)
+            {
+                Id =  heaterId,
+                Level = json.GetInt32(),
+                RawJson = json.GetRawText(),
+                SaveAction = (heater) => this.SetHeaterLevelAsync(heaterId, heater.Level)
+            })));
+    }
+
     public async Task<ApiResult> SetFanStateAsync(int fanId, bool isOn)
     {
         return await apiResultPipeline.ExecuteAsync(() => SetAsync($"api/fans/{fanId}", isOn));

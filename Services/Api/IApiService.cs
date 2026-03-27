@@ -20,6 +20,7 @@ public interface IApiService
     
     // HeaterData
     Task<ApiResult> SetHeaterLevelAsync(int heaterId, int level);
+    Task<ApiResult<HeaterData>> GetHeaterDataAsync(int heaterId);
     
     // FanData
     Task<ApiResult> SetFanStateAsync(int fanId, bool isOn);
