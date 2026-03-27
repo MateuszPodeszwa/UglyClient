@@ -7,7 +7,7 @@
     <TargetFrameworks>net8.0;net10.0</TargetFrameworks>
     <LangVersion>latestmajor</LangVersion>
     <UserSecretsId>a801da3a-65ec-49b5-ac2b-e44b0873cf0f</UserSecretsId>
-    <DefaultItemExcludes>$(DefaultItemExcludes);BeautifulClient.Tests/**</DefaultItemExcludes>
+    <DefaultItemExcludes>$(DefaultItemExcludes);BeautifulClient.Tests/**;SensorServer/**</DefaultItemExcludes>
   </PropertyGroup>
 
   <ItemGroup>

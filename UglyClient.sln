@@ -7,6 +7,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BeautifulClient", "Beautifu
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BeautifulClient.Tests", "BeautifulClient.Tests\BeautifulClient.Tests.csproj", "{4A957F55-F0D1-4EED-9E8C-8D6D038DD9B8}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SensorServer", "SensorServer\SensorServer.csproj", "{CF34B535-5D6B-4C8B-8D03-EDA939668E7B}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{4A957F55-F0D1-4EED-9E8C-8D6D038DD9B8}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4A957F55-F0D1-4EED-9E8C-8D6D038DD9B8}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{4A957F55-F0D1-4EED-9E8C-8D6D038DD9B8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CF34B535-5D6B-4C8B-8D03-EDA939668E7B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CF34B535-5D6B-4C8B-8D03-EDA939668E7B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CF34B535-5D6B-4C8B-8D03-EDA939668E7B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CF34B535-5D6B-4C8B-8D03-EDA939668E7B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
