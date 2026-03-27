@@ -10,12 +10,6 @@ using Spectre.Console;
 
 namespace BeautifulClient;
 
-// TODO:
-// Create a wrapper around existing API architecture,
-// creating a method that would automatically update sensors by n * time;
-// This will leverage that each IData object's required Id will always be assigned
-// to the correct (corresponding) sensor, allowing it to call .Update()
-
 public class App(
     ILogger<App> logger,
     IOptions<MySettings> options,

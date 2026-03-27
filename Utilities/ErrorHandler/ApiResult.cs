@@ -46,7 +46,6 @@ public sealed class ApiResult<T> : ApiResult
 {
     private ApiResult(T? value, bool isSuccess, Error error) : base(isSuccess, error)
     {
-        // TODO: This needs re-visiting.
         Value = value!;
     }
 
