@@ -7,7 +7,6 @@ using BeautifulClient.Configuration;
 using BeautifulClient.Services.Api;
 using BeautifulClient.Services.Api.Adapters;
 using BeautifulClient.Utilities;
-using BeautifulClient.Utilities.ErrorHandler;
 using BeautifulClient.Utilities.Pipelines;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
