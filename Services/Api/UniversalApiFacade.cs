@@ -4,6 +4,8 @@ using BeautifulClient.Utilities.ErrorHandler;
 
 namespace BeautifulClient.Services.Api;
 
+// TODO: Consider to implement handler in here, chain of responsibility pattern
+
 public class UniversalApiFacade(
     LocalAdapter localService,
     RemoteAdapter remoteService

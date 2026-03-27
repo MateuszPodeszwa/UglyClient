@@ -25,8 +25,8 @@ public class App(
         
         try
         {
-            HomePage homePage = new HomePage(apiService);
-            await homePage.RunAsync();
+            PageInitialiser pageInitialiser = new PageInitialiser(apiService);
+            await pageInitialiser.RunAsync();
         }
         catch (Exception e)
         {
