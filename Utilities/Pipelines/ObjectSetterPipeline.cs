@@ -44,15 +44,18 @@ public class ObjectSetterPipeline(ILogger<ObjectSetterPipeline> logger) : IObjec
     {
         var method = func.Method;
         var target = func.Target;
-
+        
         logger.LogInformation(
             """ 
-            Setter Pipeline
-                Set<{ReturnType}> (
+            Setter Pipeline: 
+            Set<{ReturnType}>
+            [
                 IsStatic={IsStatic}, 
                 DeclaringType={TargetType}, 
-                SetToValue={CapturedValues})
+                SetToValue={CapturedValues}
+            ]
             """,
+            
             typeof(T).Name,
             method.IsStatic,
             target?.GetType()?.DeclaringType?.Name.ToString() ?? "<none>",
