@@ -2,7 +2,6 @@ using BeautifulClient.Configuration;
 using BeautifulClient.Data.Objects;
 using BeautifulClient.Services.Api;
 using BeautifulClient.UI;
-using BeautifulClient.UI.Pages;
 using BeautifulClient.Utilities.ErrorHandler;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
@@ -25,8 +24,7 @@ public class App(
         
         try
         {
-            PageInitialiser pageInitialiser = new PageInitialiser(apiService);
-            await pageInitialiser.RunAsync();
+            
         }
         catch (Exception e)
         {

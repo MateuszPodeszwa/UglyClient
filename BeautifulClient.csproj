@@ -27,8 +27,8 @@
 
   <ItemGroup>
     <Folder Include="UI\Components\" />
-    <Folder Include="UI\Initializers\" />
     <Folder Include="UI\Models\" />
+    <Folder Include="UI\Pages\" />
   </ItemGroup>
 
 
