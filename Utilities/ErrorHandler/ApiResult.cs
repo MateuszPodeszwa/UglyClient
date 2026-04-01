@@ -1,8 +1,13 @@
 // ReSharper disable MemberCanBePrivate.Global
 
-using BeautifulClient.Extensions;
-
 namespace BeautifulClient.Utilities.ErrorHandler;
+
+public interface IResult
+{
+    bool IsSuccess { get; }
+    bool IsFailure { get; }
+    Error Error { get; }
+};
 
 /// <summary>
    /// Represents the outcome of an operation, encapsulating either a successful execution or a detailed error state.
@@ -12,7 +17,7 @@ namespace BeautifulClient.Utilities.ErrorHandler;
    /// <para><b>Strategy:</b> Exposes immutable properties that strictly bind a boolean success flag to a specific <see cref="ErrorHandler.Error"/> instance. Uses protected constructors to force object creation through intentional factory methods, ensuring invalid states cannot be instantiated.</para>
    /// <para><b>Pattern:</b> Implements the Result pattern, serving as the foundational wrapper for controlling application flow without relying on <c>try-catch</c> blocks for domain logic.</para>
    /// </remarks>
-public class ApiResult
+public class ApiResult : IResult
 {
     public bool IsSuccess { get; }
     public bool IsFailure => !IsSuccess;

@@ -1,6 +1,5 @@
 using System.Text.Json;
 using BeautifulClient.Data;
-using BeautifulClient.Extensions;
 using BeautifulClient.Utilities.ErrorHandler;
 
 namespace BeautifulClient.Services.Api.Actions;

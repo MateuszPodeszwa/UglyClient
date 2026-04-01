@@ -1,8 +1,8 @@
 using System.Net.Http.Json;
 using System.Text.Json;
 using BeautifulClient.Data;
-using BeautifulClient.Extensions;
 using BeautifulClient.Utilities.ErrorHandler;
+using BeautifulClient.Utilities.Extensions;
 
 namespace BeautifulClient.Services.Api.Actions;
 
