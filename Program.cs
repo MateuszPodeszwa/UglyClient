@@ -6,7 +6,14 @@ using System.Reflection;
 using BeautifulClient.Configuration;
 using BeautifulClient.Services.Api;
 using BeautifulClient.Services.Api.Adapters;
+using BeautifulClient.UI;
+using BeautifulClient.UI.Components;
+using BeautifulClient.UI.Controllers;
+using BeautifulClient.UI.Layouts;
+using BeautifulClient.UI.Models;
+using BeautifulClient.UI.Pages;
 using BeautifulClient.Utilities;
+using BeautifulClient.Utilities.Extensions;
 using BeautifulClient.Utilities.Pipelines;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -31,9 +38,12 @@ internal class Program
         
         // Configure Serilog and replace the default .NET logger
         // Logs are saved in the bin/Debug/net10.0/logs
-        builder.Services.AddSerilog(config => 
+        builder.Services.AddSerilog(config =>
         {
-            config.ReadFrom.Configuration(builder.Configuration); // Read the configuration from appsettings.json file
+            var uiSink = new SerilogQueSink();
+            config
+                .ReadFrom.Configuration(builder.Configuration) // Read the configuration from appsettings.json file
+                .WriteTo.Sink(uiSink);
         });
 
         // Bind the "MySettings" section from appsettings.json to the MySettings class
@@ -67,6 +77,20 @@ internal class Program
         builder.Services.AddSingleton<ObjectSetterPipeline>();
         builder.Services.AddTransient<LocalAdapter>();
         builder.Services.AddTransient<IApiService, UniversalApiFacade>();
+        builder.Services.AddSingleton<ConsoleHost>();
+        builder.Services.AddSingleton<SerilogQueSink>();
+        
+        builder.Services.Scan(scan => scan
+            // Look in the assembly where HomePageController lives
+            .FromAssemblyOf<HomePageController>()
+            // Find any class that implements our IRouter interface
+            .AddClasses(classes => classes.AssignableTo<IRouter>())
+            // Register them as their concrete types (e.g. HomePageController)
+            .AsSelf() 
+            .WithTransientLifetime());
+        
+        // Add HomePage with UserDashboardViewModel and apply MainLayout
+        builder.AddPageDecorator<UserDashboardModel, HomePage, MainLayout<UserDashboardModel>>(null);
         
         using var host = builder.Build();
 
