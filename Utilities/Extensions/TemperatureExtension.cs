@@ -1,6 +1,6 @@
 // ReSharper disable All
 
-namespace BeautifulClient.Extensions;
+namespace BeautifulClient.Utilities.Extensions;
 
 public static class TemperatureExtensions
 {

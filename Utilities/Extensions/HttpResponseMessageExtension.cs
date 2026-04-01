@@ -1,7 +1,7 @@
 using System.Net;
 using BeautifulClient.Utilities.ErrorHandler;
 
-namespace BeautifulClient.Extensions;
+namespace BeautifulClient.Utilities.Extensions;
 
 /// <summary>
 /// Provides extension methods for <see cref="HttpResponseMessage"/> to seamlessly map network responses into the application's unified <see cref="Error"/> domain model.
