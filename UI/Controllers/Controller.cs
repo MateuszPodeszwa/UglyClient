@@ -3,7 +3,7 @@ using BeautifulClient.Utilities.ErrorHandler;
 
 namespace BeautifulClient.UI.Controllers;
 
-public abstract class Controller
+public abstract class Controller : IRouter
 {
     protected virtual IApiService Api { get; private set; }
 
@@ -17,4 +17,7 @@ public abstract class Controller
     protected ApiResult<T> Ok<T>(T value) => value;
     protected ApiResult Fail(Error error) => (ApiResult) error;
     protected ApiResult<T> Fail<T>(Error error) => (ApiResult<T>) error;
+    
+    public abstract Task<Type?> ExecuteAsync(object? payload = null);
+    public abstract object? Payload { get; set; }
 }
