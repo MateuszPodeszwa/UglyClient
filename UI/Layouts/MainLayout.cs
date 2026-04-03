@@ -6,7 +6,7 @@ namespace BeautifulClient.UI.Layouts;
 
 public class MainLayout<TModel>(IView<TModel> innerView, SerilogQueSink queSink) : IView<TModel>
 {
-    public async Task<Type?> ReturnAsync(TModel model)
+    public async Task<(Type? nextRoute, object? payload)> ReturnAsync(TModel model)
     {
         AnsiConsole.Clear();
         

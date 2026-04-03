@@ -7,4 +7,5 @@ public class UserDashboardModel
     public celc Temperature { get; set; }
     public string Username { get; set; } = string.Empty;
     public string Status { get; set; } = string.Empty;
+    public object? Payload { get; set; } = null;
 }

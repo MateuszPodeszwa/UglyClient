@@ -6,12 +6,13 @@ namespace BeautifulClient.UI.Pages;
 
 public sealed class HomePage : IView<UserDashboardModel>
 {
-    public Task<Type?> ReturnAsync(UserDashboardModel model)
+    public Task<(Type? nextRoute, object? payload)> ReturnAsync(UserDashboardModel model)
     {   
         AnsiConsole.MarkupLine($"Welcome, [green]{model.Username}[/]! (ID: {model.UserId})");
         AnsiConsole.WriteLine($"Temperature: [{model.Temperature}]");
         AnsiConsole.WriteLine($"Sensor ID: [{model.SensorId}]");
         AnsiConsole.MarkupLine($"Status: {model.Status}");
+        AnsiConsole.MarkupLine($"Payload: {model.Payload}");
         AnsiConsole.WriteLine();
 
         var choice = AnsiConsole.Prompt(
@@ -26,6 +27,6 @@ public sealed class HomePage : IView<UserDashboardModel>
             _ => null
         };
 
-        return Task.FromResult(nextRoute);
+        return Task.FromResult<(Type? nextRoute, object? payload)>((nextRoute, choice));
     }
 }

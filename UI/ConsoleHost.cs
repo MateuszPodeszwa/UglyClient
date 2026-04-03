@@ -9,14 +9,18 @@ public sealed class ConsoleHost(IServiceProvider serviceProvider)
     {
         // Start the app at the HomePageController
         Type? currentRouteType = typeof(TController);
+        object? payload = null;
 
         while (currentRouteType != null)
         {
             // Resolve the requested controller from Dependency Injection
             IRouter controller = (IRouter) serviceProvider.GetRequiredService(currentRouteType);
-                    
-            // Execute it, and wait for it to tell us where to go next
-            currentRouteType = await controller.ExecuteAsync();
+
+            // Execute it, and wait for it to tell us where to go next.
+            currentRouteType = await controller.ExecuteAsync(payload);
+
+            // Carry current controller's payload to the next routed controller.
+            payload = controller.Payload;
         }
     }
 }

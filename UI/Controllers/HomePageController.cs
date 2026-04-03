@@ -12,15 +12,17 @@ namespace BeautifulClient.UI.Controllers;
 public sealed class HomePageController(IApiService apiService, IView<UserDashboardModel> view, ILogger<HomePageController> logger) : Controller(apiService), IRouter
 {
     private IView<UserDashboardModel> View { get; } = view;
+    public object? Payload { get; set; }
 
     private async Task<ApiResult<SensorData>> TestGetUserId()
     {
         return await Api.GetSensorTemperatureAsync(2);
     }
 
-    public async Task<Type?> ExecuteAsync()
+    public async Task<Type?> ExecuteAsync(object? payload = null)
     {
         logger.LogWarning("Executing HomePageController.ExecuteAsync");
+        logger.LogWarning($"payload: {payload}");
         var result = await TestGetUserId();
         
         var model = new UserDashboardModel
@@ -29,9 +31,13 @@ public sealed class HomePageController(IApiService apiService, IView<UserDashboa
             SensorId = result.Value.Id,
             Temperature = result.Value.Temperature,
             Username = "SystemAdmin",
-            Status = "Active"
+            Status = "Active",
+            Payload = payload
         };
         
-        return await View.ReturnAsync(model);
+        var view = await View.ReturnAsync(model);
+        Payload = view.payload;
+        
+        return view.nextRoute;
     }
 };
