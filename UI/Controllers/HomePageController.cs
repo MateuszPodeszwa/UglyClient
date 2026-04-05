@@ -12,18 +12,21 @@ namespace BeautifulClient.UI.Controllers;
 public sealed class HomePageController(IApiService apiService, IView<UserDashboardModel> view, ILogger<HomePageController> logger) : Controller(apiService)
 {
     private IView<UserDashboardModel> View { get; } = view;
-    public override object? Payload { get; set; }
 
-    private async Task<ApiResult<SensorData>> TestGetUserId()
+    private async Task<ApiResult<SensorData>> TestGetUserId(int no)
     {
-        return await Api.GetSensorTemperatureAsync(2);
+        return await Api.GetSensorTemperatureAsync(no);
     }
 
-    public override async Task<Type?> ExecuteAsync(object? payload = null)
+    public override async Task<NavigationResult> ExecuteAsync(object? payload = null)
     {
         logger.LogWarning("Executing HomePageController.ExecuteAsync");
         logger.LogWarning($"payload: {payload}");
-        var result = await TestGetUserId();
+
+        int sensorId = PayloadAs(payload, 0);
+        var result = await TestGetUserId(sensorId);
+
+        if (!result.IsSuccess) return await View.ReturnAsync(new UserDashboardModel());
         
         var model = new UserDashboardModel
         {
@@ -32,12 +35,10 @@ public sealed class HomePageController(IApiService apiService, IView<UserDashboa
             Temperature = result.Value.Temperature,
             Username = "SystemAdmin",
             Status = "Active",
-            Payload = payload
+            Payload = sensorId
         };
-        
-        var view = await View.ReturnAsync(model);
-        Payload = view.payload;
-        
-        return view.nextRoute;
+
+        return await View.ReturnAsync(model);
+
     }
 };

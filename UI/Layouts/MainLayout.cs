@@ -1,12 +1,13 @@
 using BeautifulClient.UI.Components;
+using BeautifulClient.UI.Controllers;
 using BeautifulClient.UI.Pages; // Assuming IView is here now based on your logs
 using Spectre.Console;
 
 namespace BeautifulClient.UI.Layouts;
 
-public class MainLayout<TModel>(IView<TModel> innerView, SerilogQueSink queSink) : IView<TModel>
+public class MainLayout<TModel>(IView<TModel> innerView) : IView<TModel>
 {
-    public async Task<(Type? nextRoute, object? payload)> ReturnAsync(TModel model)
+    public async Task<NavigationResult> ReturnAsync(TModel model)
     {
         AnsiConsole.Clear();
         

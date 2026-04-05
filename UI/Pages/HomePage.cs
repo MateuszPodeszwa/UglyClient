@@ -6,7 +6,7 @@ namespace BeautifulClient.UI.Pages;
 
 public sealed class HomePage : IView<UserDashboardModel>
 {
-    public Task<(Type? nextRoute, object? payload)> ReturnAsync(UserDashboardModel model)
+    public Task<NavigationResult> ReturnAsync(UserDashboardModel model)
     {   
         AnsiConsole.MarkupLine($"Welcome, [green]{model.Username}[/]! (ID: {model.UserId})");
         AnsiConsole.WriteLine($"Temperature: [{model.Temperature}]");
@@ -16,17 +16,15 @@ public sealed class HomePage : IView<UserDashboardModel>
         AnsiConsole.WriteLine();
 
         var choice = AnsiConsole.Prompt(
-            new SelectionPrompt<string>()
-                .Title("What would you like to do?")
-                .AddChoices("Refresh", "Exit"));
+            new SelectionPrompt<int>()
+                .Title("Choose the sensor id")
+                .AddChoices(1, 2, 3, 4, 5, 6, 7, 8));
 
         Type? nextRoute = choice switch
         {
-            "Refresh" => typeof(HomePageController), // Route back to the controller
-            "Exit" => null,
-            _ => null
+            _ => typeof(HomePageController)
         };
 
-        return Task.FromResult<(Type? nextRoute, object? payload)>((nextRoute, choice));
+        return Task.FromResult(new NavigationResult(nextRoute, choice));
     }
 }

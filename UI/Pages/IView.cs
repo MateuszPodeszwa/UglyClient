@@ -1,6 +1,8 @@
+using BeautifulClient.UI.Controllers;
+
 namespace BeautifulClient.UI.Pages;
 
 public interface IView<in TModel>
 {
-    Task<(Type? nextRoute, object? payload)> ReturnAsync(TModel model);
+    Task<NavigationResult> ReturnAsync(TModel model);
 }

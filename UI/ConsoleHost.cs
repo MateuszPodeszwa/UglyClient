@@ -17,10 +17,9 @@ public sealed class ConsoleHost(IServiceProvider serviceProvider)
             IRouter controller = (IRouter) serviceProvider.GetRequiredService(currentRouteType);
 
             // Execute it, and wait for it to tell us where to go next.
-            currentRouteType = await controller.ExecuteAsync(payload);
-
-            // Carry current controller's payload to the next routed controller.
-            payload = controller.Payload;
+            NavigationResult result = await controller.ExecuteAsync(payload);
+            currentRouteType = result.NextRoute;
+            payload = result.Payload;
         }
     }
 }

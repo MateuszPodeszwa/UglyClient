@@ -17,7 +17,23 @@ public abstract class Controller : IRouter
     protected ApiResult<T> Ok<T>(T value) => value;
     protected ApiResult Fail(Error error) => (ApiResult) error;
     protected ApiResult<T> Fail<T>(Error error) => (ApiResult<T>) error;
+
+    protected static TPayload PayloadAs<TPayload>(object? payload)
+    {
+        if (payload is TPayload typedPayload) return typedPayload;
+
+        throw new InvalidCastException(
+            $"Invalid payload type. Expected {typeof(TPayload).Name}, got {payload?.GetType().Name ?? "null"}.");
+    }
+
+    protected static TPayload PayloadAs<TPayload>(object? payload, TPayload defaultValue)
+    {
+        if (payload is null) return defaultValue;
+        if (payload is TPayload typedPayload) return typedPayload;
+
+        throw new InvalidCastException(
+            $"Invalid payload type. Expected {typeof(TPayload).Name}, got {payload.GetType().Name}.");
+    }
     
-    public abstract Task<Type?> ExecuteAsync(object? payload = null);
-    public abstract object? Payload { get; set; }
+    public abstract Task<NavigationResult> ExecuteAsync(object? payload = null);
 }
