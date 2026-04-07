@@ -1,3 +1,4 @@
+using BeautifulClient.Data.Records;
 using BeautifulClient.UI.Controllers;
 using BeautifulClient.UI.Models;
 using Spectre.Console;
