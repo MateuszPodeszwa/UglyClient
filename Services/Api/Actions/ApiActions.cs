@@ -53,6 +53,32 @@ public abstract class ApiActions(HttpClient httpClient) : IApiActions
         }
     }
 
+    /// <summary>
+    /// Sends an HTTP POST request with no body to the specified URI and returns an <see cref="ApiResult"/>.
+    /// </summary>
+    /// <param name="requestUri">The endpoint URI to post to.</param>
+    /// <returns>An <see cref="ApiResult"/> indicating success or a mapped failure state.</returns>
+    public virtual async Task<ApiResult> PostEmptyAsync(string requestUri)
+    {
+        try
+        {
+            using HttpResponseMessage responseMessage = await httpClient.PostAsync(requestUri, content: null);
+
+            if (!responseMessage.IsSuccessStatusCode)
+                return (ApiResult)responseMessage.ToError();
+
+            return ApiResult.Success();
+        }
+        catch (HttpRequestException)
+        {
+            return (ApiResult)Error.NetworkFailure;
+        }
+        catch (Exception exception)
+        {
+            return (ApiResult)Error.CustomHttpError(exception.HResult, exception.Message);
+        }
+    }
+
     // Set function that returns no value back, only confirmation.
     public async Task<ApiResult> SetAsync<TRequest>(string requestUri, TRequest payload)
     {

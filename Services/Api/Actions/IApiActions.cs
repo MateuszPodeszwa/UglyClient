@@ -14,6 +14,7 @@ namespace BeautifulClient.Services.Api.Actions;
 /// </remarks>
 public interface IApiActions
 {
-    public Task<ApiResult<T>> GetAsync<T>(string requestUri, Func<JsonElement, T> createData) where T : IData;
-    public Task<ApiResult> SetAsync<TRequest>(string requestUri, TRequest payload);
+    protected Task<ApiResult<T>> GetAsync<T>(string requestUri, Func<JsonElement, T> createData) where T : IData;
+    protected Task<ApiResult> SetAsync<TRequest>(string requestUri, TRequest payload);
+    protected Task<ApiResult> PostEmptyAsync(string requestUri);
 }
