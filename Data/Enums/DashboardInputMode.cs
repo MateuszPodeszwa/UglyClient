@@ -1,4 +1,6 @@
-namespace BeautifulClient.UI.Commands;
+using BeautifulClient.UI.Commands;
+
+namespace BeautifulClient.Data.Enums;
 
 /// <summary>
 /// Selects the grammar used by <see cref="ICommandParser"/> when parsing raw user input.

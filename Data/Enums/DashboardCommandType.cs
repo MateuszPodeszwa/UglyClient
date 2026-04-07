@@ -1,4 +1,4 @@
-namespace BeautifulClient.UI.Commands;
+namespace BeautifulClient.Data.Enums;
 
 /// <summary>
 /// Discriminates every action the user can request from the dashboard.
