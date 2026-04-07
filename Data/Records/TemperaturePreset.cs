@@ -1,6 +1,4 @@
-using System.Diagnostics.CodeAnalysis;
-
-namespace BeautifulClient.UI.Commands;
+namespace BeautifulClient.Data.Records;
 
 /// <summary>
 /// Defines a named configuration that sets all heater levels and fan states simultaneously.
