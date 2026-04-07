@@ -1,7 +1,9 @@
 using BeautifulClient.Data.Objects;
+using BeautifulClient.Data.Records;
 using BeautifulClient.Services.Api;
 using BeautifulClient.UI.Models;
 using BeautifulClient.UI.Pages;
+using BeautifulClient.Utilities;
 using BeautifulClient.Utilities.Attributes;
 using BeautifulClient.Utilities.ErrorHandler;
 using Microsoft.Extensions.Logging;
