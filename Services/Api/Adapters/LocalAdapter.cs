@@ -12,7 +12,8 @@ namespace BeautifulClient.Services.Api.Adapters;
 
 public class LocalAdapter(
     HttpClient httpClient,
-    ApiResultPipeline apiResultPipeline
+    ApiResultPipeline apiResultPipeline,
+    ObjectSetterPipeline objectSetterPipeline
 ) : ApiActions(httpClient), IApiService
 {
     public async Task<ApiResult<SensorData>> GetSensorTemperatureAsync(int sensorId)
@@ -26,7 +27,7 @@ public class LocalAdapter(
         
         return await apiResultPipeline.ExecuteAsync((() => GetAsync<SensorData>(
             data.ToString(),
-            json => new(null!)
+            json => new(objectSetterPipeline)
             {
                 Id =  sensorId,
                 Temperature = json.GetDouble(),
