@@ -9,7 +9,7 @@ public sealed class ConsoleHost(IServiceProvider serviceProvider)
     {
         // Start the app at the HomePageController
         Type? currentRouteType = typeof(TController);
-        object? payload = null;
+        object? payload = null; // This must be NULL, settings are WIP
 
         while (currentRouteType != null)
         {
