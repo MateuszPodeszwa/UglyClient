@@ -75,4 +75,10 @@ public class RemoteAdapter(
     {
         return await apiResultPipeline.ExecuteAsync(() => SetAsync($"api/heat/{heaterId}", level));
     }
+
+    /// <inheritdoc/>
+    public async Task<ApiResult> ResetAsync()
+    {
+        return await apiResultPipeline.ExecuteAsync(() => PostEmptyAsync("api/Envo/reset"));
+    }
 }

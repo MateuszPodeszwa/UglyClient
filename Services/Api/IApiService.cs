@@ -25,4 +25,7 @@ public interface IApiService
     // FanData
     Task<ApiResult> SetFanStateAsync(int fanId, bool isOn);
     Task<ApiResult<FanData>> GetFanDataAsync(int fanId);
+
+    // Simulation
+    Task<ApiResult> ResetAsync();
 }

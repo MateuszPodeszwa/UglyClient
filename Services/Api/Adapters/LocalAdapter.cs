@@ -56,6 +56,12 @@ public class LocalAdapter(
         return Task.FromResult((ApiResult<FanData>)Error.LocalApiFail);
     }
 
+    /// <inheritdoc/>
+    public Task<ApiResult> ResetAsync()
+    {
+        return Task.FromResult((ApiResult)Error.LocalApiFail);
+    }
+
     // I decided to implement string in the base GetAsync as every type and class has .ToString method.
     public override Task<ApiResult<T>> GetAsync<T>(string? data, Func<JsonElement, T> createData)
     {

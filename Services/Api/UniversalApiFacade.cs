@@ -70,4 +70,15 @@ public class UniversalApiFacade(
         
         return await remoteService.GetFanDataAsync(fanId);
     }
+
+    /// <inheritdoc/>
+    public async Task<ApiResult> ResetAsync()
+    {
+        var localResult = await localService.ResetAsync();
+
+        if (localResult.IsSuccess)
+            return localResult;
+
+        return await remoteService.ResetAsync();
+    }
 }
