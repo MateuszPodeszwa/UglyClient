@@ -1,7 +1,7 @@
 using BeautifulClient.Tests.UI.TestDoubles;
-using BeautifulClient.UI.Components;
 using BeautifulClient.UI.Models;
 using BeautifulClient.UI.Rendering;
+using BeautifulClient.Utilities;
 using Serilog;
 using Spectre.Console;
 

@@ -1,7 +1,7 @@
 using BeautifulClient.Data.Objects;
 using BeautifulClient.UI.Commands;
-using BeautifulClient.UI.Components;
 using BeautifulClient.UI.Models;
+using BeautifulClient.Utilities;
 using Spectre.Console;
 
 namespace BeautifulClient.UI.Rendering;

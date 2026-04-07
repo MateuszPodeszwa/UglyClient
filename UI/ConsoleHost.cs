@@ -1,4 +1,6 @@
+using BeautifulClient.Data.Records;
 using BeautifulClient.UI.Controllers;
+using BeautifulClient.Utilities;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace BeautifulClient.UI;

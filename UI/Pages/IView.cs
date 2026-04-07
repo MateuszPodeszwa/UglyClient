@@ -1,3 +1,4 @@
+using BeautifulClient.Data.Records;
 using BeautifulClient.UI.Controllers;
 
 namespace BeautifulClient.UI.Pages;
