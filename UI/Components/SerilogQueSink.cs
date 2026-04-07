@@ -43,4 +43,15 @@ public class SerilogQueSink(IFormatProvider? formatProvider = null) : ILogEventS
             return LogQueue.ToArray();
         }
     }
+
+    /// <summary>
+    /// Removes all queued log entries.
+    /// </summary>
+    public static void ClearLogs()
+    {
+        lock (LogQueue)
+        {
+            LogQueue.Clear();
+        }
+    }
 }
