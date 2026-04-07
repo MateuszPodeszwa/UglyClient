@@ -2,7 +2,7 @@ using Serilog.Core;
 using Serilog.Events;
 using Spectre.Console;
 
-namespace BeautifulClient.UI.Components;
+namespace BeautifulClient.Utilities;
 
 public class SerilogQueSink(IFormatProvider? formatProvider = null) : ILogEventSink
 {

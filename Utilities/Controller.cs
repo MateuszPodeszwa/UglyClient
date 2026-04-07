@@ -1,7 +1,9 @@
+using BeautifulClient.Data.Records;
 using BeautifulClient.Services.Api;
+using BeautifulClient.UI.Controllers;
 using BeautifulClient.Utilities.ErrorHandler;
 
-namespace BeautifulClient.UI.Controllers;
+namespace BeautifulClient.Utilities;
 
 public abstract class Controller : IRouter
 {

@@ -1,4 +1,7 @@
-namespace BeautifulClient.UI.Controllers;
+using BeautifulClient.Data.Records;
+using BeautifulClient.UI.Controllers;
+
+namespace BeautifulClient.Utilities;
 
 /// <summary>
 /// Defines a route-capable controller that can execute UI flow logic and return
