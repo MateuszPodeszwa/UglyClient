@@ -42,7 +42,7 @@ public class RemoteAdapter(
     public async Task<ApiResult<HeaterData>> GetHeaterDataAsync(int heaterId)
     {
         return await apiResultPipeline.ExecuteAsync((() => GetAsync<HeaterData>(
-            $"api/heater/{heaterId}",
+            $"api/heat/{heaterId}/level",
             json => new (objectSetterPipeline)
             {
                 Id =  heaterId,
