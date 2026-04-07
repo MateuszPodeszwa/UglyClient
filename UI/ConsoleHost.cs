@@ -7,7 +7,6 @@ public sealed class ConsoleHost(IServiceProvider serviceProvider)
 {
     public async Task Host<TController>(object? settings = null) where TController : Controller
     {
-        // Start the app at the HomePageController
         Type? currentRouteType = typeof(TController);
         object? payload = null; // This must be NULL, settings are WIP
 
