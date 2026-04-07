@@ -35,5 +35,6 @@ public abstract class Controller : IRouter
             $"Invalid payload type. Expected {typeof(TPayload).Name}, got {payload.GetType().Name}.");
     }
     
+    /// <inheritdoc/>
     public abstract Task<NavigationResult> ExecuteAsync(object? payload = null);
 }
