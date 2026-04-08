@@ -19,7 +19,7 @@ public class App(
         
         try
         {
-            await consoleHost.Host<HomePageController>(MySettings);
+            await consoleHost.Host<DashboardController>(MySettings);
         }
         catch (Exception e)
         {
