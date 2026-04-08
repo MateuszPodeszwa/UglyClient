@@ -90,15 +90,14 @@ internal class Program
             .AsSelf() 
             .WithTransientLifetime());
         
-        // Add HomePage with UserDashboardViewModel and apply MainLayout
+        // Add HomePage with UserDashboardViewModel and apply MinLayout
         builder.AddPageDecorator<UserDashboardModel, HomePage, MainLayout<UserDashboardModel>>(null);
-        // builder.AddPageDecorator<DashboardModel, DashboardPage, MainLayout<DashboardModel>>(null);
+        builder.AddPageDecorator<DashboardModel, DashboardPage, MainLayout<DashboardModel>>(null);
 
         // Dashboard services
         builder.Services.AddSingleton<IDashboardRenderer, DashboardRenderer>();
         builder.Services.AddTransient<ICommandParser, CommandParser>();
         builder.Services.AddTransient<ICommandExecutor, CommandExecutor>();
-        builder.Services.AddTransient<IView<DashboardModel>, DashboardPage>();
         
         using var host = builder.Build();
 

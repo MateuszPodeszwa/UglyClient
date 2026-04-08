@@ -1,5 +1,3 @@
-using BeautifulClient.Data.Objects;
-using BeautifulClient.UI.Commands;
 using BeautifulClient.UI.Models;
 using BeautifulClient.Utilities;
 using Spectre.Console;
@@ -17,12 +15,11 @@ namespace BeautifulClient.UI.Rendering;
 public sealed class DashboardRenderer : IDashboardRenderer
 {
     private const int MaxHeaterLevel = 5;
-    private const string AppTitle = "ENVIRONMENT CONTROL DASHBOARD";
+    public const string AppTitle = "ENVIRONMENT CONTROL DASHBOARD";
 
     /// <inheritdoc/>
-    public void RenderDashboard(DashboardModel model)
+    public void RenderDashboard(DashboardModel model) // Rendered inside the Layout Wrapper
     {
-        AnsiConsole.Clear();
         RenderHeader(model.RefreshedAt);
         RenderDeviceGrid(model);
         RenderFeedbackBar(model.LastFeedback, model.IsFeedbackError);
@@ -33,7 +30,7 @@ public sealed class DashboardRenderer : IDashboardRenderer
     public void RenderHelp()
     {
         AnsiConsole.Clear();
-
+        
         var table = new Table()
             .Border(TableBorder.Rounded)
             .Title($"[bold white]{AppTitle} — Keyboard Shortcuts[/]")
@@ -66,7 +63,7 @@ public sealed class DashboardRenderer : IDashboardRenderer
     public void RenderLogs()
     {
         AnsiConsole.Clear();
-
+        
         var logs = SerilogQueSink.GetLogs();
 
         var logGrid = new Grid().AddColumn(new GridColumn());
@@ -91,10 +88,6 @@ public sealed class DashboardRenderer : IDashboardRenderer
         AnsiConsole.MarkupLine("[grey dim]Press any key to return to the dashboard...[/]");
     }
 
-    // ────────────────────────────────
-    // ── Private rendering helpers
-    // ────────────────────────────────
-
 /// <summary>
     /// Renders the top header containing the application title and refresh timestamp.
     /// </summary>
@@ -106,7 +99,6 @@ public sealed class DashboardRenderer : IDashboardRenderer
             .AddColumn(new GridColumn().NoWrap().RightAligned());
 
         headerGrid.AddRow(
-            new Markup($"[bold white]{AppTitle}[/]"),
             new Markup($"[grey]Refreshed: {refreshedAt:HH:mm:ss}[/]"));
 
         var panel = new Panel(headerGrid)

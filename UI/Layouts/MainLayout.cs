@@ -13,26 +13,17 @@ public class MainLayout<TModel>(IView<TModel> innerView) : IView<TModel>
         AnsiConsole.Clear();
 
         var header = new Panel(
-                new Align(new Markup("[blue bold]BeautifulClient Dashboard[/]"), HorizontalAlignment.Center))
+                new Align(new Markup("[bold]ENVIRONMENT CONTROL DASHBOARD[/]"), HorizontalAlignment.Center))
             .Expand()
             .Border(BoxBorder.Rounded);
         AnsiConsole.Write(header);
 
-        var currentLogs = SerilogQueSink.GetLogs();
-
-        var logGrid = new Grid().AddColumn(new GridColumn());
-
-        foreach (var log in currentLogs)
-        {
-            logGrid.AddRow(new Markup(log));
-        }
-
-        var footer = new Panel(logGrid)
+        /*var footer = new Panel(logGrid)
             .Header("[grey]Activity Logs[/]")
             .Expand()
-            .Border(BoxBorder.Rounded);
+            .Border(BoxBorder.Rounded);*/
 
-        AnsiConsole.Write(footer);
+        // AnsiConsole.Write(footer);
 
         AnsiConsole.WriteLine();
 
