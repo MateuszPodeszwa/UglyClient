@@ -5,6 +5,7 @@ using Spectre.Console;
 
 namespace BeautifulClient.UI.Pages;
 
+// Test Class
 /// <summary>
 /// Abstraction for selecting a sensor ID from the home page.
 /// </summary>

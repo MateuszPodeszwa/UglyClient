@@ -1,4 +1,4 @@
-namespace BeautifulClient.UI.Pages;
+namespace BeautifulClient.UI.Commands;
 
 /// <summary>
 /// Reads keyboard and line input for the dashboard interaction loop.

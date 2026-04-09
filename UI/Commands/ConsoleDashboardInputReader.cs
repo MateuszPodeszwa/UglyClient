@@ -1,4 +1,6 @@
-namespace BeautifulClient.UI.Pages;
+using BeautifulClient.UI.Pages;
+
+namespace BeautifulClient.UI.Commands;
 
 /// <summary>
 /// Default <see cref="IDashboardInputReader"/> implementation backed by <see cref="Console"/>.

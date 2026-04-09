@@ -5,6 +5,12 @@ using Spectre.Console;
 
 namespace BeautifulClient.UI.Rendering;
 
+// Logs and Help is being handled in this class due to following benefits:
+// - One route for one user context
+// - Cleaner separation: page/controller handles navigation and input flow, renderer handles drawing.
+// - Better live updates: dashboard, help, and logs can refresh together in one render loop.
+// Due to following benefits it would not be much reasonable to separate logs/help into separate pages/controllers and models.
+
 /// <summary>
 /// Implements <see cref="IDashboardRenderer"/> using Spectre.Console to produce a rich,
 /// webpage-style terminal dashboard for the Environment Control System.
@@ -15,8 +21,7 @@ namespace BeautifulClient.UI.Rendering;
 /// </remarks>
 public sealed class DashboardRenderer : IDashboardRenderer
 {
-    private const int MaxHeaterLevel = 5;
-    public const string AppTitle = "ENVIRONMENT CONTROL DASHBOARD";
+    private const int MaxHeaterLevel = 5; // TODO: Move it to the Controller
 
     /// <inheritdoc/>
     public void RenderDashboard(DashboardModel model) // Rendered inside the Layout Wrapper
@@ -34,7 +39,7 @@ public sealed class DashboardRenderer : IDashboardRenderer
         
         var table = new Table()
             .Border(TableBorder.Rounded)
-            .Title($"[bold white]{AppTitle} — Keyboard Shortcuts[/]")
+            .Title($"[bold white] Keyboard Shortcuts[/]")
             .AddColumn(new TableColumn("[grey]Shortcut[/]").Width(14))
             .AddColumn(new TableColumn("[grey]Mode / Action[/]").Width(20))
             .AddColumn(new TableColumn("[grey]Syntax & Examples[/]"));
