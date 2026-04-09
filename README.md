@@ -23,7 +23,6 @@
 <!-- Funding & Academic -->
 [![Patreon](https://img.shields.io/badge/Patreon-Support%20Me-FF424D?logo=patreon&logoColor=white)](https://www.patreon.com/c/mateuszpodeszwa)
 [![Academic Project](https://img.shields.io/badge/Academic-Assignment-4CAF50?logo=googlescholar&logoColor=white)](CITING.md)
-[![Built with AI](https://img.shields.io/badge/Built%20with-AI%20Assistance-FF6B6B?logo=openai&logoColor=white)](FAIRAIUSAGE.md)
 
 <!-- Technology Stack -->
 [![Spectre.Console](https://img.shields.io/badge/Spectre.Console-0.54.0-5C2D91?logo=.net)](https://spectreconsole.net/)
