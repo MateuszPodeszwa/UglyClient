@@ -1,5 +1,6 @@
 using BeautifulClient.UI.Models;
 using BeautifulClient.Utilities;
+using BeautifulClient.Utilities.Extensions;
 using Spectre.Console;
 
 namespace BeautifulClient.UI.Rendering;
@@ -29,7 +30,7 @@ public sealed class DashboardRenderer : IDashboardRenderer
     /// <inheritdoc/>
     public void RenderHelp()
     {
-        AnsiConsole.Clear();
+        AnsiConsole.WriteLine();
         
         var table = new Table()
             .Border(TableBorder.Rounded)
@@ -62,7 +63,7 @@ public sealed class DashboardRenderer : IDashboardRenderer
     /// <inheritdoc/>
     public void RenderLogs()
     {
-        AnsiConsole.Clear();
+        AnsiConsole.WriteLine();
         
         var logs = SerilogQueSink.GetLogs();
 
@@ -157,7 +158,7 @@ public sealed class DashboardRenderer : IDashboardRenderer
             var (color, label) = TemperatureCategory(sensor.Temperature.Value);
             table.AddRow(
                 $"[white]{id}[/]",
-                $"[{color}]{Markup.Escape(sensor.Temperature.ToString())}[/]",
+                $"[{color}]{Markup.Escape(sensor.Temperature.Round().ToString())}[/]",
                 $"[{color}]{label}[/]");
         }
 
