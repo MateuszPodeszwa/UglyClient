@@ -7,23 +7,9 @@
 [![C#](https://img.shields.io/badge/C%23-12.0-239120?logo=csharp&logoColor=white)](https://learn.microsoft.com/en-us/dotnet/csharp/)
 [![License](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
 [![Platform](https://img.shields.io/badge/platform-Windows%20%7C%20macOS%20%7C%20Linux-lightgrey.svg)]()
-
-<!-- Project status -->
-[![Build Status](https://img.shields.io/badge/build-passing-brightgreen.svg)]()
-[![Code Quality](https://img.shields.io/badge/code%20quality-A-brightgreen.svg)]()
 [![Maintenance](https://img.shields.io/badge/Maintained%3F-yes-brightgreen.svg)]()
-[![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](CONTRIBUTING.md)
-
-<!-- Social & Support -->
-[![GitHub Stars](https://img.shields.io/github/stars/MateuszPodeszwa/UglyClient?style=social)](https://github.com/MateuszPodeszwa/UglyClient)
-[![GitHub Forks](https://img.shields.io/github/forks/MateuszPodeszwa/UglyClient?style=social)](https://github.com/MateuszPodeszwa/UglyClient)
 [![GitHub Issues](https://img.shields.io/github/issues/MateuszPodeszwa/UglyClient)](https://github.com/MateuszPodeszwa/UglyClient/issues)
 [![GitHub Pull Requests](https://img.shields.io/github/issues-pr/MateuszPodeszwa/UglyClient)](https://github.com/MateuszPodeszwa/UglyClient/pulls)
-
-<!-- Funding & Academic -->
-[![Patreon](https://img.shields.io/badge/Patreon-Support%20Me-FF424D?logo=patreon&logoColor=white)](https://www.patreon.com/c/mateuszpodeszwa)
-[![Academic Project](https://img.shields.io/badge/Academic-Assignment-4CAF50?logo=googlescholar&logoColor=white)](CITING.md)
-[![Built with AI](https://img.shields.io/badge/Built%20with-AI%20Assistance-FF6B6B?logo=openai&logoColor=white)](FAIRAIUSAGE.md)
 
 <!-- Technology Stack -->
 [![Spectre.Console](https://img.shields.io/badge/Spectre.Console-0.54.0-5C2D91?logo=.net)](https://spectreconsole.net/)
@@ -105,8 +91,6 @@ dotnet test --logger "console;verbosity=detailed"
 
 ## 📚 Documentation
 
-- **[AGENTS.md](AGENTS.md)** — Guidance for AI coding agents working in this repository
-- **[CLAUDE.md](CLAUDE.md)** — Specific instructions for Claude Code assistant
 - **[CONTRIBUTING.md](CONTRIBUTING.md)** — How to contribute to this project
 - **[ARCHITECTURE.md](ARCHITECTURE.md)** — Detailed architecture and design patterns
 - **[SECURITY.md](SECURITY.md)** — Security policy and vulnerability reporting
@@ -210,6 +194,10 @@ Your support helps me continue creating educational projects and maintaining ope
 ## 📧 Contact
 
 For questions or feedback, please open an issue on GitHub.
+
+<!-- Funding & Academic -->
+[![Patreon](https://img.shields.io/badge/Patreon-Support%20Me-FF424D?logo=patreon&logoColor=white)](https://www.patreon.com/c/mateuszpodeszwa)
+[![Academic Project](https://img.shields.io/badge/Academic-Assignment-4CAF50?logo=googlescholar&logoColor=white)](CITING.md)
 
 ---
 
