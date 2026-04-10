@@ -18,13 +18,6 @@ public class MainLayout<TModel>(IView<TModel> innerView) : IView<TModel>
             .Border(BoxBorder.Rounded);
         AnsiConsole.Write(header);
 
-        /*var footer = new Panel(logGrid)
-            .Header("[grey]Activity Logs[/]")
-            .Expand()
-            .Border(BoxBorder.Rounded);*/
-
-        // AnsiConsole.Write(footer);
-
         AnsiConsole.WriteLine();
 
         return await innerView.ReturnAsync(model);

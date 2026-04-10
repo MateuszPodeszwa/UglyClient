@@ -45,7 +45,7 @@ public sealed class DashboardRenderer : IDashboardRenderer
             .AddColumn(new TableColumn("[grey]Syntax & Examples[/]"));
 
         table.AddRow("[cyan]Ctrl+F[/]", "Fan Control", "[grey]<id> on|off  |  all on|off  |  1on 2off 3on[/]");
-        table.AddRow("[yellow]Ctrl+H[/]", "Heater Control", "[grey]<id> <0-5>  |  all <0-5>  |  <id>:<level>[/]");
+        table.AddRow("[yellow]Ctrl+W[/]", "Heater Control", "[grey]<id> <0-5>  |  all <0-5>  |  <id>:<level>[/]");
         table.AddRow("[magenta]Ctrl+A[/]","All Devices / Commands", "[grey]fan all on|off  |  heater all <0-5>  |  preset warm|cool|balanced|off[/]");
         table.AddRow("[red]Ctrl+R[/]", "Reset Simulation", "[grey]Prompts for confirmation before posting reset[/]");
         table.AddRow("[blue]Ctrl+L[/]", "Activity Logs", "[grey]Shows the last 10 log entries[/]");
@@ -276,7 +276,7 @@ public sealed class DashboardRenderer : IDashboardRenderer
     {
         AnsiConsole.MarkupLine(
             "[grey][[Ctrl+F]][/] Fan  " +
-            "[grey][[Ctrl+H]][/] Heater  " +
+            "[grey][[Ctrl+W]][/] Heater  " +
             "[grey][[Ctrl+A]][/] All  " +
             "[grey][[Ctrl+R]][/] Reset  " +
             "[grey][[Ctrl+L]][/] Logs  " +

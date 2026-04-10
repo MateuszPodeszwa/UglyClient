@@ -45,26 +45,15 @@ public class ObjectSetterPipeline(ILogger<ObjectSetterPipeline> logger) : IObjec
         var method = func.Method;
         var target = func.Target;
         
-        logger.LogInformation(
-            """ 
-            Setter Pipeline: 
-            Set<{ReturnType}>
-            [
-                IsStatic={IsStatic}, 
-                DeclaringType={TargetType}, 
-                SetToValue={CapturedValues}
-            ]
-            """,
-            
-            typeof(T).Name,
-            method.IsStatic,
-            target?.GetType()?.DeclaringType?.Name.ToString() ?? "<none>",
-            DescribeTargetValues(target));
+        var trySetMessage =
+            $"{(method.IsStatic ? "static " : string.Empty)}TrySet<{target?.GetType()?.DeclaringType?.Name ?? "<none>"}.{typeof(T).Name}> to{DescribeTargetValues(target)}";
+
+        logger.LogInformation(trySetMessage);
 
         T result = func();
 
         logger.LogInformation(
-            "Set<{ReturnType}> returned {ResultValue}",
+            "-> Set<{ReturnType}> returned {ResultValue}",
             typeof(T).Name,
             FormatValue(result));
 

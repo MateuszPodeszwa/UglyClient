@@ -65,7 +65,7 @@ public sealed class DashboardPage : IView<DashboardModel>
     {
         renderer.RenderDashboard(model);
 
-        AnsiConsole.Markup("[grey]>[/] ");
+        AnsiConsole.Markup("[green bold]>[/] ");
         var key     = inputReader.ReadKey(intercept: true);
         var command = DispatchKey(key);
 
@@ -87,6 +87,7 @@ public sealed class DashboardPage : IView<DashboardModel>
             return key.Key switch
             {
                 ConsoleKey.F => EnterFanMode(),
+                ConsoleKey.W => EnterHeaterMode(),
                 ConsoleKey.H => EnterHeaterMode(),
                 ConsoleKey.A => EnterCommandMode(),
                 ConsoleKey.R => ConfirmReset(),

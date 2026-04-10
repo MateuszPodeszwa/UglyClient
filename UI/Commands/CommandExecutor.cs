@@ -16,7 +16,7 @@ namespace BeautifulClient.UI.Commands;
 /// </remarks>
 public sealed class CommandExecutor(IApiService apiService) : ICommandExecutor
 {
-    private const int DeviceCount = 3;
+    private const int DeviceCount = 3; // TODO: Move it to appsettings.json
 
     /// <inheritdoc/>
     public Task<CommandResult> ExecuteAsync(ParsedCommand command) => command.Type switch
@@ -91,8 +91,6 @@ public sealed class CommandExecutor(IApiService apiService) : ICommandExecutor
             ? new CommandResult(true,  $"All heaters set to level {level}.")
             : new CommandResult(false, $"{failures}/{DeviceCount} heaters failed to update.");
     }
-
-    // Simulation
 
     private async Task<CommandResult> ResetAsync()
     {
