@@ -12,11 +12,10 @@ In the spirit of transparency and ethical software development, this file disclo
 
 - **Purpose**: Code completion and generation assistance
 - **Usage Areas**:
-  - Boilerplate code generation (constructors, property implementations)
   - XML documentation comment generation
   - Unit test scaffolding
   - Markdown documents, including readme.md 
-- **Human Oversight**: All generated code reviewed
+- **Human Oversight**: All generated content reviewed
 
 ### 2. **Claude (Anthropic)**
 
