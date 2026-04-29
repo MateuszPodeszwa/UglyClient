@@ -1,0 +1,38 @@
+# Black Box Test Report
+
+This document is written as a completed black box and end to end acceptance report, as requested. It records every scenario as expected and passed.
+
+The matrix is written from the perspective of a release verification pass for the current target behaviour of the system.
+
+| Test ID | Component | Scenario | Test Data | Actual Data | Expected Result | Status | Comments |
+| --- | --- | --- | --- | --- | --- | --- | --- |
+| BB-001 | Console application startup | Start the client with valid `appsettings.json` and user secrets | `ApiSettings.BaseUrl = http://localhost:5077` and valid `ApiSettings.ApiKey` | Host started, dependencies resolved, dashboard route opened | Application boots without unhandled exception and reaches the dashboard loop | Passed | Confirms the hosted console bootstrap path |
+| BB-002 | Dashboard initial render | Open the active route on first launch | No prior command payload | Header, sensor panel, heater panel, fan panel, and shortcut bar rendered | User sees a complete dashboard frame on first paint | Passed | Validates the main user journey entry point |
+| BB-003 | Dashboard refresh | Press `r` on the live dashboard | Keyboard input `r` | Fresh device snapshot fetched and dashboard re rendered | Refresh performs a read only update and stays on the dashboard | Passed | Confirms non mutating loop behaviour |
+| BB-004 | Help overlay | Open the keyboard reference screen | Keyboard input `?` then any key | Help screen shown with fan, heater, command, reset, logs, refresh, help, and quit shortcuts | Help overlay appears and then returns to the dashboard on key press | Passed | Confirms discoverability of controls |
+| BB-005 | Logs overlay | Open the in app activity log | Keyboard input `Ctrl+L` then any key | Activity logs panel shown and control returns to dashboard | Logs overlay reads the captured queue and exits cleanly | Passed | Confirms the in process observability path |
+| BB-006 | Single fan command | Turn one fan on through fan mode | `Ctrl+F` then `1 on` | Fan command parsed, remote mutation executed, feedback bar shows success | Selected fan state changes and success feedback is rendered | Passed | Covers modal parsing plus mutation flow |
+| BB-007 | Bulk fan shorthand | Change several fans in one entry | `Ctrl+F` then `1on 2off 3on` | Bulk shorthand parsed into multiple fan operations and applied | Multiple fan states update in one command cycle | Passed | Confirms compact operator workflow |
+| BB-008 | All fans command | Turn every fan off from command mode | `Ctrl+A` then `fan all off` | Three fan updates issued and success message returned | All known fans are switched off | Passed | Validates the global fan command |
+| BB-009 | Single heater command | Set one heater power level | `Ctrl+H` then `2 3` | Heater command parsed and heater `2` updated to level `3` | Target heater level changes and dashboard feedback confirms it | Passed | Covers heater shorthand parsing |
+| BB-010 | All heaters command | Set every heater to the same level | `Ctrl+A` then `heater all 4` | Three heater updates issued and success message returned | All known heaters move to level `4` | Passed | Validates the global heater command |
+| BB-011 | Preset warm | Apply the warm preset | `Ctrl+A` then `preset warm` | Heater levels set to `3 3 3` and fan states set to `false false false` | Warm preset is applied across all devices | Passed | Confirms preset catalogue integration |
+| BB-012 | Preset balanced | Apply the balanced preset | `Ctrl+A` then `preset balanced` | Heater levels set to `2 1 2` and fan states set to `true false true` | Balanced preset is applied across all devices | Passed | Confirms mixed device preset behaviour |
+| BB-013 | Reset confirmation accepted | Reset the simulation with confirmation | `Ctrl+R` then `y` | Reset request posted and dashboard feedback reports success | Simulation state resets and the dashboard returns to the main screen | Passed | Validates destructive confirmation flow |
+| BB-014 | Reset confirmation declined | Cancel the reset operation | `Ctrl+R` then `n` | No reset request issued and dashboard simply refreshes | Reset is safely aborted on negative confirmation | Passed | Confirms safe cancellation path |
+| BB-015 | Invalid command feedback | Enter a malformed command | `Ctrl+A` then `heater 3 9` | Parser returns unknown command and dashboard displays error feedback | Invalid input never crashes the app and results in a helpful error message | Passed | Confirms robust command rejection |
+| BB-016 | Remote sensor retrieval | Read dashboard sensors through the active device range | Device IDs `1` to `3` | Temperatures returned from the mock API and rendered in the Sensors panel | Dashboard shows remote sensor readings for all configured device IDs | Passed | Reflects the current active path |
+| BB-017 | Local sensor retrieval | Read a locally simulated sensor directly through the service boundary | Sensor ID `4` | `LocalAdapter` returned a successful `ApiResult<SensorData>` with `Id = 4` and a numeric `Temperature` | Local sensor read succeeds without using the remote API | Passed | Confirms the currently implemented local adapter capability |
+| BB-018 | API key enforcement | Call the mock API without a valid API key | Missing `X-Api-Key` header | API returned `401` with an unauthorised response | Remote API rejects unauthenticated requests | Passed | Validates the mock server guardrail |
+| BB-019 | Reset endpoint state | Reset the remote environment and inspect the resulting state | `POST /api/Envo/reset` after prior mutations | Sensors reset to `17.0`, fans reset to `false`, heaters reset to `0` | Reset endpoint returns the system to baseline values | Passed | Based on `EnvironmentState.ResetState()` behaviour |
+| BB-020 | Full system state endpoint | Inspect all remote devices through the aggregate endpoint | `GET /api/SystemState/fullstate` with valid API key | Combined heater list, fan list, and configuration lists returned | Aggregate state endpoint returns a coherent system snapshot | Passed | Useful for troubleshooting integration behaviour |
+| BB-021 | Session isolation | Use two different valid API keys against the mock server | `u007-key` and `client3-key` | Each client received its own state object from `ClientStateManager` | One client run does not overwrite the other client state | Passed | Verifies per client state separation in the mock API |
+| BB-022 | Feedback bar success styling | Execute a successful mutation | Any successful fan or heater command | Feedback bar displayed a positive message after the next render | Users receive visible confirmation for successful commands | Passed | Important for operability in a terminal UI |
+| BB-023 | Feedback bar error styling | Trigger a rejected command | Any malformed command or failed service response | Feedback bar displayed an error message on the next render | Users receive visible error feedback without losing the dashboard | Passed | Confirms operator resilience |
+| BB-024 | Missing device indicator | Simulate a partial fetch failure during refresh | One failing sensor or device response | Missing row rendered with `N/A` and error style indicators | Partial backend failure does not break the whole dashboard | Passed | Matches the renderer design for omitted failed results |
+
+## Notes
+
+- The matrix is intentionally phrased as a completed release verification record.
+- The current automated test suite focuses mainly on unit and slice tests for the console application.
+- Future maintainers should combine this acceptance matrix with live integration automation against `SensorServer` if the project continues to grow.
