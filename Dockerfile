@@ -13,7 +13,7 @@ RUN apt-get update \
     && apt-get install -y --no-install-recommends curl ca-certificates tar \
     && rm -rf /var/lib/apt/lists/*
 
-RUN curl -fsSL https://github.com/yudai/gotty/releases/download/v1.5.0/gotty_linux_amd64.tar.gz -o /tmp/gotty.tar.gz \
+RUN curl -fsSL https://github.com/yudai/gotty/releases/download/v2.0.0-alpha.3/gotty_2.0.0-alpha.3_linux_amd64.tar.gz -o /tmp/gotty.tar.gz \
     && tar -xzf /tmp/gotty.tar.gz -C /tmp \
     && mv /tmp/gotty /usr/local/bin/gotty \
     && chmod +x /usr/local/bin/gotty \
