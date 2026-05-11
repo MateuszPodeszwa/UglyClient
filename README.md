@@ -76,6 +76,28 @@ Configuration is loaded from:
 - `appsettings.json` — Base URL and Serilog settings
 - User Secrets — API key (not committed to source control)
 
+### Deploying as a Web Terminal (Render, Free Tier)
+
+This repository includes a Docker + Render setup that serves the console app in-browser via a terminal session.
+
+```bash
+# Local container smoke test
+docker build -t beautifulclient-terminal .
+docker run --rm -p 10000:10000 beautifulclient-terminal
+```
+
+Then open `http://localhost:10000`.
+
+Render setup:
+1. Create a new **Web Service** from this repo (Render will detect `render.yaml`).
+2. Keep `env: docker` and free plan.
+3. Ensure env vars are set (defaults are already in `render.yaml`):
+   - `SENSOR_SERVER_URL=http://127.0.0.1:5077`
+   - `ApiSettings__BaseUrl=http://127.0.0.1:5077`
+   - `ApiSettings__ApiKey=u007-key`
+
+The container starts `SensorServer` internally and exposes the `BeautifulClient` console UI through a browser terminal.
+
 ## 🧪 Testing
 
 ```bash
