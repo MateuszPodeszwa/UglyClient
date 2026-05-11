@@ -1,0 +1,15 @@
+services:
+  - type: web
+    name: beautifulclient-terminal
+    env: docker
+    plan: free
+    dockerfilePath: ./Dockerfile
+    autoDeploy: true
+    healthCheckPath: /
+    envVars:
+      - key: SENSOR_SERVER_URL
+        value: http://127.0.0.1:5077
+      - key: ApiSettings__BaseUrl
+        value: http://127.0.0.1:5077
+      - key: ApiSettings__ApiKey
+        value: u007-key
