@@ -1,6 +1,6 @@
 # BeautifulClient
 
-> A modern, console-based IoT sensor dashboard with clean architecture and real-time monitoring capabilities
+> A modern, console-based IoT sensor dashboard with clean architecture and real-time monitoring capabilities (left fork network)
 
 <!-- Core badges -->
 [![.NET](https://img.shields.io/badge/.NET-10.0%20%7C%208.0-512BD4?logo=dotnet&logoColor=white)](https://dotnet.microsoft.com/)
