@@ -361,11 +361,3 @@ MigrationBackup/
 
 # Fody - auto-generated XML schema
 FodyWeavers.xsd
-/.idea
-.DS_Store
-
-# AI Related
-.claude
-CLAUDE.md
-AGENTS.md
-/.github/copilot-instructions.md

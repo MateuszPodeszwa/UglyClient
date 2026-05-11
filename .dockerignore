@@ -1,0 +1,13 @@
+**/bin
+**/obj
+.git
+.github
+.idea
+.run
+README.md
+ARCHITECTURE.md
+CONTRIBUTING.md
+CITING.md
+FAIRAIUSAGE.md
+SECURITY.md
+LICENSE

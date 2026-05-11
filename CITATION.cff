@@ -1,0 +1,25 @@
+cff-version: 1.2.0
+message: "If you use this software in academic work, please cite it as below."
+type: software
+title: "BeautifulClient: A Modern IoT Sensor Dashboard with Clean Architecture"
+abstract: "A terminal-based IoT dashboard application demonstrating SOLID principles, clean architecture, and modern .NET practices. Developed as an academic assignment to showcase software refactoring from legacy code to maintainable systems."
+authors:
+  - family-names: "Podeszwa"
+    given-names: "Mateusz"
+repository-code: "https://github.com/MateuszPodeszwa/UglyClient"
+url: "https://github.com/MateuszPodeszwa/UglyClient"
+license: MIT
+keywords:
+  - IoT
+  - dashboard
+  - console-application
+  - clean-architecture
+  - SOLID-principles
+  - dotnet
+  - csharp
+  - academic-project
+  - software-engineering
+  - refactoring
+  - design-patterns
+version: 1.0.0
+date-released: 2026-04-06
